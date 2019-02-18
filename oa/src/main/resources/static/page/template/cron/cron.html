@@ -20,14 +20,14 @@
     <div class="layui-tab" lay-filter="cron">
         <!--选项卡-->
         <ul class="layui-tab-title">
-            <li class="layui-this" data-name="day">天</li>
-            <li data-name="hour">小时</li>
+            <li class="layui-this" data-name="day">每月</li>
+            <li data-name="hour">每天</li>
             <li data-name="minute">每小时</li>
         </ul>
 
         <div class="layui-tab-content">
             <!--小时-->
-            <div class="layui-tab-item layui-show">
+            <div class="layui-tab-item layui-show" id="day">
                 <div class="layui-form" action="" >
                     <div class="layui-form-item">
                         <div class="layui-form-item" pane="" >
@@ -70,7 +70,7 @@
             <div class="layui-tab-item">
                 <div class="layui-form" action="" >
                     <div class="layui-form-item">
-                        <div class="layui-form-item" pane="" >
+                        <div class="layui-form-item" pane="" id="hour">
                             AM:<br>
                             <input type="checkbox" name="0"  lay-filter="hour" lay-skin="primary" title="0">
                             <input type="checkbox" name="1"  lay-filter="hour" lay-skin="primary" title="1">
@@ -106,7 +106,7 @@
                 <div class="layui-tab-item layui-show">
                     <div class="layui-form" action="" >
                         <div class="layui-form-item">
-                            <div class="layui-form-item" pane="" >
+                            <div class="layui-form-item" pane="" id="minute">
                                 <input type="checkbox" name="0"  lay-filter="minute" lay-skin="primary" title="0">
                                 <input type="checkbox" name="1"  lay-filter="minute" lay-skin="primary" title="1">
                                 <input type="checkbox" name="2"  lay-filter="minute" lay-skin="primary" title="2">
@@ -179,13 +179,7 @@
                     <div class="layui-col-md12">
                         <div class="layui-card">
                             <div class="layui-card-header">最近5次执行时间</div>
-                            <div class="layui-card-body">
-                                <p>2019年2月15日15:04:38</p>
-                                <p>2019年2月15日15:04:38</p>
-                                <p>2019年2月15日15:04:38</p>
-                                <p>2019年2月15日15:04:38</p>
-                                <p>2019年2月15日15:04:38</p>
-                            </div>
+                            <div class="layui-card-body" id="calcRunTime"></div>
                         </div>
                     </div>
                 </div>
@@ -219,44 +213,57 @@
             // console.log(data.othis); //得到美化后的DOM对象
 
             var arr = [];
-            $(".layui-form-checked span").each(function(){
+            $("#day .layui-form-checked span").each(function(){
                 arr.push($(this).html());
             });
             var crons = cron.split(" ");
-            crons[3] = arr.join(',');
+            crons[0] = crons[0]==="*"?"0":crons[0];
+            crons[1] = crons[1]==="*"?"0":crons[1];
+            crons[2] = crons[2]==="*"?"0":crons[2];
+            crons[3] =  arr.length===0?"0":arr.join(',');
             cron = crons.join(' ');
             getDataList();
         });
         form.on('checkbox(hour)', function(data){
             var arr = [];
-            $(".layui-form-checked span").each(function(){
+            $("#hour .layui-form-checked span").each(function(){
                 arr.push($(this).html());
             });
             var crons = cron.split(" ");
-            crons[2] = arr.join(',');
+            crons[0] = crons[0]==="*"?"0":crons[0];
+            crons[1] = crons[1]==="*"?"0":crons[1];
+            crons[2] =  arr.length===0?"0":arr.join(',');
             cron = crons.join(' ');
             getDataList();
         });
         form.on('checkbox(minute)', function(data){
             var arr = [];
-            $(".layui-form-checked span").each(function(){
+            $("#minute .layui-form-checked span").each(function(){
                 arr.push($(this).html());
             });
             var crons = cron.split(" ");
-            crons[1] = arr.join(',');
+            crons[0] = crons[0]==="*"?"0":crons[0];
+            crons[1] = arr.length===0?"0":arr.join(',');
             cron = crons.join(' ');
             getDataList();
         });
 
         function getDataList(){
-            console.log(cron);
             $.ajax({
                 url:"/quartz/calcRunTime",
                 data:{"cron":cron},
                 dataType:"json",
                 type:"post",
                 success:function (res) {
-                    console.log(res)
+                    if(res.status){
+                        var datas = res.data;
+                        var str = "";
+                        for (var i = 0; i < datas.length; i++) {
+                            var data = datas[i];
+                            str += "<p>"+data+"</p>";
+                        }
+                        $("#calcRunTime").html(str);
+                    }
                 }
             })
         }
