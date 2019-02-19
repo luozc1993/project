@@ -44,7 +44,7 @@ public class MainController extends BaseController implements ErrorController {
         List<Map<String, Object>> menuTree = getMenuTree(authorities, -1);
         model.addAttribute("menus", menuTree);
         model.addAttribute("loginUser", getLoginUser());
-        return "index.html";
+        return "public.html";
     }
 
     /**
@@ -53,7 +53,7 @@ public class MainController extends BaseController implements ErrorController {
     @GetMapping("/login")
     public String login() {
         if (getLoginUser() != null) {
-            return "redirect:index";
+            return "redirect:public";
         }
         return "login.html";
     }

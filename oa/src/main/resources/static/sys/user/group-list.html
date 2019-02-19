@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="/assets/images/favicon.ico" rel="icon">
+    <title>用户组</title>
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/assets/module/admin.css"/>
+</head>
+<body>
+
+
+<!-- 页面加载loading -->
+<div class="page-loading">
+    <div class="rubik-loader"></div>
+</div>
+
+
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+
+            <table class="layui-table" id="group" lay-filter="group"></table>
+
+        </div>
+    </div>
+
+</div>
+
+<!--表头-->
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+    </div>
+</script>
+<!--行编辑栏-->
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="/assets/js/common.js"></script>
+<script>
+    layui.use(['table','admin'], function(){
+        var table = layui.table;
+        var admin = layui.admin;
+        var $ = layui.jquery;
+
+        //第一个实例
+        table.render({
+            elem: '#group'
+            ,toolbar: '#toolbarDemo'
+            ,url:'/user/groupListData'
+            ,page: true //开启分页
+            ,cols: [[ //表头
+                {field: 'id', title: 'ID'}
+                ,{field: 'name', title: '用户名'}
+                ,{field: 'type', title: '类型'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+            ]]
+        });
+
+        //头工具栏事件
+        table.on('toolbar(group)', function(obj){
+            switch(obj.event){
+                case 'add':
+                    showEditModel();
+                    break;
+
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(group)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    deleteGroup(obj,index);
+                });
+            } else if(obj.event === 'edit'){
+                showEditModel(data);
+                // layer.prompt({
+                //     formType: 2
+                //     ,value: data.email
+                // }, function(value, index){
+                //     obj.update({
+                //         email: value
+                //     });
+                //     layer.close(index);
+                // });
+            }
+        });
+
+
+        // 移除loading动画
+        setTimeout(function () {
+            admin.removeLoading();
+        }, window == top ? 300 : 150);
+
+
+        // 显示表单弹窗
+        function showEditModel(data) {
+            admin.putTempData('user_group', data);
+            admin.putTempData('formOk', false);
+            top.layui.admin.open({
+                type: 2,
+                title: data ? '修改用户' : '添加用户',
+                content: '/sys/user/groupForm.html',
+                end: function () {
+                    table.reload('group');  // 成功刷新表格
+                    admin.getTempData('formOk') && table.reload('group');  // 成功刷新表格
+                }
+            });
+        }
+
+        /**
+         * 删除组
+         * @param obj
+         * @param index
+         */
+        function deleteGroup(obj,index){
+            var id = obj.data.id;
+            $.ajax({
+                url:"/user/delGroup",
+                data:{"id":id},
+                dataType:"json",
+                type:"post",
+                success:function(res){
+                    if(res.status){
+                        obj.del();
+                        layer.msg(res.msg);
+                    }
+                },
+                error:function(){
+                    layer.msg('系统错误');
+                },
+                complete:function(){
+                    layer.close(index);
+                }
+            })
+        }
+    });
+</script>
+</body>
+</html>

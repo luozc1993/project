@@ -581,7 +581,7 @@ describe('Array', function() {
                 testSubject.filter(callback);
                 expect(testSubject).toExactlyMatch(copy);
             });
-            it('should not be affected by same-index mutation', function () {
+            it('should not be affected by same-public mutation', function () {
                 var results = [1, 2, 3]
                 .filter(function (value, index, array) {
                     array[index] = 'a';
