@@ -29,12 +29,13 @@ public class UserController {
 
     @RequestMapping(value = "/groupListData")
     @ResponseBody
-    public Object groupListData(){
-        List<Group> list = identityService.createGroupQuery().list();
+    public Object groupListData(int page,int limit ){
+        List<Group> list = identityService.createGroupQuery().listPage((page-1)*limit,limit);
+        long count = identityService.createGroupQuery().count();
         JSONObject json = new JSONObject();
         json.put("code",0);
         json.put("msg","");
-        json.put("count",1);
+        json.put("count",count);
         json.put("data",list);
         return json;
     }
@@ -51,6 +52,19 @@ public class UserController {
         Group group = identityService.newGroup(groupId);
         group.setName(name);
         group.setType("oa");
+        identityService.saveGroup(group);
+        return JsonData.success(name,"保存成功");
+    }
+    /**
+     * 添加用户组
+     * @param id  //组名称
+     * @return      提示
+     */
+    @RequestMapping(value = "/updateGroup")
+    @ResponseBody
+    public JsonData updateGroup(String id,String name){
+        Group group = identityService.createGroupQuery().groupId(id).singleResult();
+        group.setName(name);
         identityService.saveGroup(group);
         return JsonData.success(name,"保存成功");
     }

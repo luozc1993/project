@@ -52,7 +52,12 @@
         // 表单提交事件
         form.on('submit(btnSubmit)', function (data) {
             layer.load(2);
-            $.get(url, data.field, function (data) {
+            if(user){
+                user['name'] = data.field.name;
+            }else{
+                user = data.field;
+            }
+            $.get(url, user, function (data) {
                 layer.closeAll('loading');
                 console.log(data)
                 if (data.status) {
