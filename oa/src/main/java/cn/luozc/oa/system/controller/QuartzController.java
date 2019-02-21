@@ -1,16 +1,12 @@
-package cn.luozc.oa.controller;
+package cn.luozc.oa.system.controller;
 
-import cn.luozc.utils.HttpUtils;
 import cn.luozc.utils.JsonData;
-import net.sf.json.JSONArray;
 import org.quartz.TriggerUtils;
 import org.quartz.impl.triggers.CronTriggerImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;

@@ -19015,7 +19015,7 @@ ORYX.Plugins.Arrangement = ORYX.Plugins.AbstractPlugin.extend({
 			'group': ORYX.I18N.Arrangement.groupZ,
 			'icon': ORYX.PATH + "images/shape_move_front.png",
 			'description': ORYX.I18N.Arrangement.btfDesc,
-			'index': 1,
+			'public': 1,
 			'minShape': 1});
 			
 		this.facade.offer({
@@ -19024,7 +19024,7 @@ ORYX.Plugins.Arrangement = ORYX.Plugins.AbstractPlugin.extend({
 			'group': ORYX.I18N.Arrangement.groupZ,
 			'icon': ORYX.PATH + "images/shape_move_back.png",
 			'description': ORYX.I18N.Arrangement.btbDesc,
-			'index': 2,
+			'public': 2,
 			'minShape': 1});
 
 		this.facade.offer({
@@ -19033,7 +19033,7 @@ ORYX.Plugins.Arrangement = ORYX.Plugins.AbstractPlugin.extend({
 			'group': ORYX.I18N.Arrangement.groupZ,
 			'icon': ORYX.PATH + "images/shape_move_forwards.png",
 			'description': ORYX.I18N.Arrangement.bfDesc,
-			'index': 3,
+			'public': 3,
 			'minShape': 1});
 
 		this.facade.offer({
@@ -19042,7 +19042,7 @@ ORYX.Plugins.Arrangement = ORYX.Plugins.AbstractPlugin.extend({
 			'group': ORYX.I18N.Arrangement.groupZ,
 			'icon': ORYX.PATH + "images/shape_move_backwards.png",
 			'description': ORYX.I18N.Arrangement.bbDesc,
-			'index': 4,
+			'public': 4,
 			'minShape': 1});
 
 		// Aligment
@@ -19052,7 +19052,7 @@ ORYX.Plugins.Arrangement = ORYX.Plugins.AbstractPlugin.extend({
 			'group': ORYX.I18N.Arrangement.groupA,
 			'icon': ORYX.PATH + "images/shape_align_bottom.png",
 			'description': ORYX.I18N.Arrangement.abDesc,
-			'index': 1,
+			'public': 1,
 			'minShape': 2});
 
 
@@ -19063,7 +19063,7 @@ ORYX.Plugins.Arrangement = ORYX.Plugins.AbstractPlugin.extend({
 			'group': ORYX.I18N.Arrangement.groupA,
 			'icon': ORYX.PATH + "images/shape_align_top.png",
 			'description': ORYX.I18N.Arrangement.atDesc,
-			'index': 3,
+			'public': 3,
 			'minShape': 2});
 
 		this.facade.offer({
@@ -19072,7 +19072,7 @@ ORYX.Plugins.Arrangement = ORYX.Plugins.AbstractPlugin.extend({
 			'group': ORYX.I18N.Arrangement.groupA,
 			'icon': ORYX.PATH + "images/shape_align_left.png",
 			'description': ORYX.I18N.Arrangement.alDesc,
-			'index': 4,
+			'public': 4,
 			'minShape': 2});
 
 		this.facade.offer({
@@ -19081,7 +19081,7 @@ ORYX.Plugins.Arrangement = ORYX.Plugins.AbstractPlugin.extend({
 			'group': ORYX.I18N.Arrangement.groupA,
 			'icon': ORYX.PATH + "images/shape_align_right.png",
 			'description': ORYX.I18N.Arrangement.arDesc,
-			'index': 6,
+			'public': 6,
 			'minShape': 2});
 
 		**/
@@ -19150,7 +19150,7 @@ ORYX.Plugins.Arrangement = ORYX.Plugins.AbstractPlugin.extend({
 			},
 			rollback: function(){
 				
-				// Sort all elements on the index of there containment
+				// Sort all elements on the public of there containment
 				var sortedEl =	this.elAndIndex.sortBy( function( el ) {
 									var value 	= el.el;
 									var t 		= $A(value.node.parentNode.childNodes);
@@ -20207,9 +20207,9 @@ ORYX.Plugins.DragDropResize = ORYX.Plugins.AbstractPlugin.extend({
 	 *
 	 */
 	/*registryChanged: function(pluginsData) {
-		// Save all new Plugin, sorted by group and index
+		// Save all new Plugin, sorted by group and public
 		this.pluginsData = pluginsData.sortBy( function(value) {
-			return (value.group + "" + value.index);
+			return (value.group + "" + value.public);
 		});
 	},*/
 

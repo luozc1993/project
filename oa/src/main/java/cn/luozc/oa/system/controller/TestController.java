@@ -1,5 +1,6 @@
-package cn.luozc.oa.controller;
+package cn.luozc.oa.system.controller;
 
+import cn.luozc.oa.system.Service.MenuService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -53,5 +54,13 @@ public class TestController {
         // 因为007只有一个代办的任务，直接完成任务，并赋值下一个节点的受理人user2为Kevin办理
         taskService.complete(list.get(0).getId(), variables1);
         System.out.println("User Task1被完成了，此时流程已流转到User Task2");
+    }
+
+    @Autowired private MenuService menuService;
+
+    @RequestMapping("/test")
+    @ResponseBody
+    public Object test(){
+        return menuService.selectMenus();
     }
 }

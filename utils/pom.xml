@@ -20,12 +20,6 @@
 
     <dependencies>
 
-        <!--httpclient  发送外部https/http 请求-->
-        <dependency>
-            <groupId>apache-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

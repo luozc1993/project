@@ -1,30 +1,32 @@
 server:
   port: 8880
 spring:
-
   #data source config
   datasource:
-    driver: com.mysql.jdbc.Driver
     url: jdbc:mysql://119.29.119.221:3306/office?useUnicode=true&characterEncoding=utf8&nullCatalogMeansCurrent=true
     username: lzc
     password: luozc1993.
-    initsize: 10
-    maxActive: 20
-    minIdle: 10
-    maxWait: 120000
-    poolPreparedStatements: false
-    maxOpenPreparedStatements: -1
-    validationQuery: select 1
-    testOnborrow: true
-    testOnReturn: true
-    testWhileIdle: true
-    timeBetweenEvictionRunsMillis: 120000
-    filters: log4j,stat
-
-    activiti:
-      check-process-definitions: true #�Զ���顢�������̶����ļ�
-      database-schema-update: true #�Զ��������ݿ�ṹ
-      process-definition-location-prefix: classpath:/processes/ #���̶����ļ����Ŀ¼
-      #process-definition-location-suffixes: #�����ļ���ʽ
-      #  - **.bpmn20.xml
-      #  - **.bpmn
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 10  #初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时
+      max-active: 20    #最大连接池数量
+      maxWait: 30000    #获取连接时最大等待时间，单位毫秒。配置了maxWait之后，缺省启用公平锁，并发效率会有所下降，如果需要可以通过配置useUnfairLock属性为true使用非公平锁。
+      poolPreparedStatements: false   #是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，比如说oracle。在mysql下建议关闭。
+      maxOpenPreparedStatements: -1   #要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
+      validationQuery: select 1       #用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用。
+      testOnborrow: true              #申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+      testOnReturn: true              #归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+      testWhileIdle: true             #建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+      timeBetweenEvictionRunsMillis: 60000 #有两个含义：  1) Destroy线程会检测连接的间隔时间2) testWhileIdle的判断依据，详细看testWhileIdle属性的说明
+      filters: log4j,stat
+  activiti:
+    check-process-definitions: true #自动检查、部署流程定义文件
+    database-schema-update: true #自动更新数据库结构
+    process-definition-location-prefix: classpath:/processes/ #流程定义文件存放目录
+    #process-definition-location-suffixes: #流程文件格式
+    #  - **.bpmn20.xml
+    #  - **.bpmn
+mybatis:
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  type-aliases-package: cn.luozc.oa.*.model

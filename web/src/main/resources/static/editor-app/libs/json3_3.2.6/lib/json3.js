@@ -46,7 +46,7 @@
     }
 
     var isSupported;
-    if (name == "bug-string-char-index") {
+    if (name == "bug-string-char-public") {
       // IE <= 7 doesn't support accessing string characters using square
       // bracket notation. IE 8 only supports this for primitives.
       isSupported = "a"[0] != "a";
@@ -178,8 +178,8 @@
     var arrayClass = "[object Array]";
     var booleanClass = "[object Boolean]";
 
-    // Detect incomplete support for accessing string characters by index.
-    var charIndexBuggy = has("bug-string-char-index");
+    // Detect incomplete support for accessing string characters by public.
+    var charIndexBuggy = has("bug-string-char-public");
 
     // Define additional utility methods if the `Date` methods are buggy.
     if (!isExtended) {

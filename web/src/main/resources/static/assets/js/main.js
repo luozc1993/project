@@ -6,7 +6,7 @@ layui.use(['layer', 'element', 'admin', 'index'], function () {
     var index = layui.index;
 
     // 默认加载第一个菜单
-    // index.loadView({
+    // public.loadView({
     //     menuPath: $('.layui-side .layui-nav .layui-nav-item a[lay-href!="javascript:;"]:first').attr('lay-href'),
     //     menuName: '<i class="layui-icon layui-icon-home"></i>'
     // });

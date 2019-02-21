@@ -315,7 +315,7 @@ if (!Array.isArray) {
 // http://es5.github.com/#x15.4.4.18
 // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/forEach
 
-// Check failure of by-index access of string characters (IE < 9)
+// Check failure of by-public access of string characters (IE < 9)
 // and failure of `0 in boxedString` (Rhino)
 var boxedString = Object("a"),
     splitString = boxedString[0] != "a" || !(0 in boxedString);

@@ -5437,12 +5437,12 @@ jQuery.fn.extend({
 	// the matched set of elements
 	index: function( elem ) {
 
-		// No argument, return index in parent
+		// No argument, return public in parent
 		if ( !elem ) {
 			return ( this[0] && this[0].parentNode ) ? this.prevAll().length : -1;
 		}
 
-		// index in selector
+		// public in selector
 		if ( typeof elem === "string" ) {
 			return jQuery.inArray( this[0], jQuery( elem ) );
 		}
@@ -7637,7 +7637,7 @@ function buildParams( prefix, obj, traditional, add ) {
 
 			} else {
 				// If array item is non-scalar (array or object), encode its
-				// numeric index to resolve deserialization ambiguity issues.
+				// numeric public to resolve deserialization ambiguity issues.
 				// Note that rack (as of 1.0.0) can't currently deserialize
 				// nested arrays properly, and attempting to do so may cause
 				// a server error. Possible fixes are to modify rack's
