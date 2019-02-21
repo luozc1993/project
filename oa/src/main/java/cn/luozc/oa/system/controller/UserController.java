@@ -1,5 +1,7 @@
 package cn.luozc.oa.system.controller;
 
+import cn.luozc.oa.system.Service.UserGroupService;
+import cn.luozc.oa.system.model.UserGroup;
 import cn.luozc.utils.JsonData;
 import net.sf.json.JSONObject;
 import org.activiti.engine.IdentityService;
@@ -18,6 +20,7 @@ import java.util.UUID;
 public class UserController {
 
     @Resource private IdentityService identityService;
+    @Resource private UserGroupService userGroupService;
 
 
     @RequestMapping(value = "/groupList",method = RequestMethod.GET)
@@ -51,6 +54,12 @@ public class UserController {
         group.setName(name);
         group.setType("oa");
         identityService.saveGroup(group);
+        UserGroup userGroup = new UserGroup();
+        userGroup.setId(groupId);
+        userGroup.setName(name);
+        userGroupService.insert(userGroup);
+
+
         return JsonData.success(name,"保存成功");
     }
     /**

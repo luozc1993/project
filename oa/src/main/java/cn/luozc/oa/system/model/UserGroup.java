@@ -3,8 +3,8 @@ package cn.luozc.oa.system.model;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
-@TableName("sys_menu")
-public class Menu {
+@TableName("sys_user_group")
+public class UserGroup {
 
     private String id;
 

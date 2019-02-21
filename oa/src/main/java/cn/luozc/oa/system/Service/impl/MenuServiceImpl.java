@@ -3,12 +3,13 @@ package cn.luozc.oa.system.Service.impl;
 import cn.luozc.oa.system.Service.MenuService;
 import cn.luozc.oa.system.dao.MenuDao;
 import cn.luozc.oa.system.model.Menu;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-@Service(value = "menuService")
+@Service
 public class MenuServiceImpl implements MenuService {
 
 
@@ -17,6 +18,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<Menu> selectMenus() {
-        return menuDao.selectMenus();
+        Wrapper wrapper = new EntityWrapper();
+        return menuDao.selectMaps(wrapper);
     }
 }
