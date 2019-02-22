@@ -31,7 +31,7 @@ public class UserGroupServiceImpl implements UserGroupService {
 
     @Override
     public void insert(UserGroup userGroup) {
-        Integer insert = userGroupDao.insert(userGroup);
+        Integer insert = userGroupDao.insertAllColumn(userGroup);
         System.err.println(insert);
     }
 }

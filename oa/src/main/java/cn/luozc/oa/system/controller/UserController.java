@@ -55,7 +55,7 @@ public class UserController {
         group.setType("oa");
         identityService.saveGroup(group);
         UserGroup userGroup = new UserGroup();
-        userGroup.setId(groupId);
+        userGroup.setGroupId(groupId);
         userGroup.setName(name);
         userGroupService.insert(userGroup);
 
