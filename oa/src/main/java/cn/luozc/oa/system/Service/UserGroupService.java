@@ -12,5 +12,9 @@ public interface UserGroupService {
 
     int count();
 
-    void insert(UserGroup userGroup);
+    int insert(UserGroup userGroup);
+
+    int update(UserGroup userGroup);
+
+    int delete(String id);
 }

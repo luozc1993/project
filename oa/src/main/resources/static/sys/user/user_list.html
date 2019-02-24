@@ -24,7 +24,7 @@
     <div class="layui-card">
         <div class="layui-card-body">
 
-            <table class="layui-table" id="group" lay-filter="group"></table>
+            <table class="layui-table" id="tableId" lay-filter="tableId"></table>
 
         </div>
     </div>
@@ -53,9 +53,9 @@
 
         //第一个实例
         table.render({
-            elem: '#group'
+            elem: '#tableId'
             ,toolbar: '#toolbarDemo'
-            ,url:'/user/groupListData'
+            ,url:'/user/userListData'
             ,page: true //开启分页
             ,cols: [[ //表头
                 //{field: 'id', title: 'ID'}
@@ -66,7 +66,7 @@
         });
 
         //头工具栏事件
-        table.on('toolbar(group)', function(obj){
+        table.on('toolbar(tableId)', function(obj){
             switch(obj.event){
                 case 'add':
                     showEditModel();
@@ -76,7 +76,7 @@
         });
 
         //监听行工具事件
-        table.on('tool(group)', function(obj){
+        table.on('tool(tableId)', function(obj){
             var data = obj.data;
             //console.log(obj)
             if(obj.event === 'del'){
@@ -111,7 +111,7 @@
             top.layui.admin.open({
                 type: 2,
                 title: data ? '修改用户' : '添加用户',
-                content: '/sys/user/groupForm.html',
+                content: '/sys/user/userForm.html',
                 end: function () {
                     table.reload('group');  // 成功刷新表格
                     admin.getTempData('formOk') && table.reload('group');  // 成功刷新表格

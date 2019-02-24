@@ -26,12 +26,21 @@ public class UserGroupServiceImpl implements UserGroupService {
 
     @Override
     public int count() {
-        return userGroupDao.selectCount(new EntityWrapper());
+        return userGroupDao.selectCount(new EntityWrapper<UserGroup>());
     }
 
     @Override
-    public void insert(UserGroup userGroup) {
-        Integer insert = userGroupDao.insertAllColumn(userGroup);
-        System.err.println(insert);
+    public int insert(UserGroup userGroup) {
+        return userGroupDao.insertAllColumn(userGroup);
+    }
+
+    @Override
+    public int update(UserGroup userGroup) {
+        return userGroupDao.updateAllColumnById(userGroup);
+    }
+
+    @Override
+    public int delete(String id) {
+        return  userGroupDao.deleteById(id);
     }
 }
