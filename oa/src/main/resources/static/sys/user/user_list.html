@@ -58,9 +58,10 @@
             ,url:'/user/userListData'
             ,page: true //开启分页
             ,cols: [[ //表头
-                //{field: 'id', title: 'ID'}
-                {field: 'name', title: '用户名'}
-                ,{field: 'type', title: '类型'}
+                {field: 'userId', title: 'ID',hide:true}
+                ,{field: 'firstName', title: '账号'}
+                ,{field: 'lastName', title: '昵称'}
+                ,{field: 'email', title: '邮箱'}
                 ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
             ]]
         });
@@ -106,15 +107,14 @@
 
         // 显示表单弹窗
         function showEditModel(data) {
-            admin.putTempData('user_group', data);
+            admin.putTempData('user', data);
             admin.putTempData('formOk', false);
             top.layui.admin.open({
                 type: 2,
                 title: data ? '修改用户' : '添加用户',
                 content: '/sys/user/userForm.html',
                 end: function () {
-                    table.reload('group');  // 成功刷新表格
-                    admin.getTempData('formOk') && table.reload('group');  // 成功刷新表格
+                    table.reload('tableId');  // 成功刷新表格
                 }
             });
         }

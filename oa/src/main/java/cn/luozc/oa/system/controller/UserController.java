@@ -1,8 +1,12 @@
 package cn.luozc.oa.system.controller;
 
-import cn.luozc.oa.system.Service.UserGroupService;
+import cn.luozc.oa.system.Service.UserService;
+import cn.luozc.oa.system.model.SysUser;
 import cn.luozc.oa.system.model.UserGroup;
 import cn.luozc.utils.JsonData;
+import cn.luozc.utils.MD5Util;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import net.sf.json.JSONObject;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -21,7 +25,7 @@ import java.util.UUID;
 public class UserController {
 
     @Resource private IdentityService identityService;
-    @Resource private UserGroupService userGroupService;
+    @Resource private UserService userService;
 
 
     @RequestMapping(value = "/groupList",method = RequestMethod.GET)
@@ -64,7 +68,7 @@ public class UserController {
         UserGroup userGroup = new UserGroup();
         userGroup.setGroupId(groupId);
         userGroup.setName(name);
-        userGroupService.insert(userGroup);
+        userService.insert(userGroup);
 
         return JsonData.success(name,"保存成功");
     }
@@ -82,7 +86,7 @@ public class UserController {
         UserGroup userGroup = new UserGroup();
         userGroup.setGroupId(id);
         userGroup.setName(name);
-        userGroupService.update(userGroup);
+        userService.update(userGroup);
         return JsonData.success(name,"保存成功");
     }
 
@@ -95,7 +99,7 @@ public class UserController {
     @ResponseBody
     public JsonData delGroup(String id){
         identityService.deleteGroup(id);
-        userGroupService.delete(id);
+        userService.delete(id);
         return JsonData.success("","删除成功");
     }
 
@@ -110,33 +114,37 @@ public class UserController {
     @RequestMapping(value = "/userListData")
     @ResponseBody
     public Object userListData(int page,int limit ){
-        List<User> users = identityService.createUserQuery().listPage((page - 1) * limit, limit);
+
         long count = identityService.createUserQuery().count();
         JSONObject json = new JSONObject();
         json.put("code",0);
         json.put("msg","");
         json.put("count",count);
-        json.put("data",users);
+        json.put("data",userService.findPage((page-1)*limit,limit));
+
         return json;
     }
 
     /**
      * 添加用户组
-     * @param name  //组名称
      * @return      提示
      */
     @RequestMapping(value = "/addUser")
     @ResponseBody
-    public JsonData addUser(String name){
+    public JsonData addUser(SysUser sysUser){
         String userId = UUID.randomUUID().toString();
+        sysUser.setPassword(MD5Util.getMD5Str(sysUser.getPassword()));
+        //添加activiti用户表
         User user = identityService.newUser(userId);
-        user.setLastName("姓名");
-        user.setPassword("123456");
-        user.setEmail("1079648153@qq.com");
-        user.setFirstName("昵称");
+        user.setLastName(sysUser.getLastName());
+        user.setPassword(sysUser.getPassword());
+        user.setEmail(sysUser.getEmail());
+        user.setFirstName(sysUser.getFirstName());
         identityService.saveUser(user);
-
-        return JsonData.success(name,"保存成功");
+        //添加到系统表
+        sysUser.setUserId(userId);
+        userService.insert(sysUser);
+        return JsonData.success(sysUser,"保存成功");
     }
 
 }

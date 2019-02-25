@@ -17,14 +17,14 @@
     <div class="layui-form-item">
         <label class="layui-form-label">账号</label>
         <div class="layui-input-block">
-            <input name="username" placeholder="请输入用户账号" type="text" class="layui-input" maxlength="20"
+            <input name="firstName" placeholder="请输入用户账号" type="text" class="layui-input" maxlength="20"
                    lay-verify="required" required/>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">昵称</label>
         <div class="layui-input-block">
-            <input name="nickname" placeholder="请输入用户昵称" type="text" class="layui-input" maxlength="20"
+            <input name="lastName" placeholder="请输入用户昵称" type="text" class="layui-input" maxlength="20"
                    lay-verify="required" required/>
         </div>
     </div>
@@ -72,7 +72,7 @@
         // 表单提交事件
         form.on('submit(btnSubmit)', function (data) {
             layer.load(2);
-
+            console.log(data.field)
             $.get(url, data.field, function (data) {
                 layer.closeAll('loading');
                 console.log(data)

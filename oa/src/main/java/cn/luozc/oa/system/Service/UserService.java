@@ -1,11 +1,12 @@
 package cn.luozc.oa.system.Service;
 
 import cn.luozc.oa.system.model.Menu;
+import cn.luozc.oa.system.model.SysUser;
 import cn.luozc.oa.system.model.UserGroup;
 
 import java.util.List;
 
-public interface UserGroupService {
+public interface UserService {
 
     //查询所有数据
     List<UserGroup> findAll();
@@ -17,4 +18,9 @@ public interface UserGroupService {
     int update(UserGroup userGroup);
 
     int delete(String id);
+
+    int insert(SysUser user);
+
+    List<SysUser> findPage(int page,int limit);
+
 }

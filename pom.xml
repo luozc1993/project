@@ -32,12 +32,7 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!--工作流activiti-->
-        <dependency>
-            <groupId>org.activiti</groupId>
-            <artifactId>activiti-spring-boot-starter-basic</artifactId>
-            <version>6.0.0</version>
-        </dependency>
+
         <!--===================json 需要依赖的6个包=======================-->
         <dependency>
             <groupId>net.sf.json-lib</groupId>

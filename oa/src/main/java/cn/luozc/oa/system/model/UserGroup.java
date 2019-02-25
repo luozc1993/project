@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 @TableName("sys_user_group")
 public class UserGroup {
 
-    @TableId
+    @TableField
     private String groupId;
     @TableField
     private String name;

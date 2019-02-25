@@ -22,8 +22,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="oa" options="" />
       <module name="project" options="" />
-      <module name="utils" options="-parameters" />
-      <module name="web" options="-parameters" />
+      <module name="utils" options="" />
+      <module name="web" options="" />
     </option>
   </component>
 </project>

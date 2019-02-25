@@ -10,9 +10,9 @@ spring:
     druid:
       #监控统计拦截的filters
       filters: stat
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       #配置基本属性
-      url: jdbc:mysql://119.29.119.221:3306/office?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+      url: jdbc:mysql://119.29.119.221:3306/office?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&nullCatalogMeansCurrent=true
       username: lzc
       password: luozc1993.
       #配置初始化大小/最小/最大
@@ -32,7 +32,10 @@ spring:
       #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
       pool-prepared-statements: false
       max-pool-prepared-statement-per-connection-size: 20
-
+  #配置自动建表：updata:没有表新建，有表更新操作,控制台显示建表语句
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: true
 
   activiti:
     check-process-definitions: true #自动检查、部署流程定义文件
@@ -41,7 +44,10 @@ spring:
     #process-definition-location-suffixes: #流程文件格式
     #  - **.bpmn20.xml
     #  - **.bpmn
-
+  thymeleaf:
+    mode: HTML
+    encoding: utf-8
+    cache: false
 
 ##
 ## Mybatis-plus配置
