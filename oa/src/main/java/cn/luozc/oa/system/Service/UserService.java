@@ -17,12 +17,14 @@ public interface UserService {
 
     UserGroup update(UserGroup userGroup);
 
-    void delete(String id);
+    void deleteGroup(String id);
 
     SysUser insert(SysUser user);
 
     SysUser update(SysUser user);
 
     List<SysUser> findPage(int page,int limit);
+
+    void deleteUser(String id);
 
 }

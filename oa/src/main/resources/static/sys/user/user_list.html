@@ -125,9 +125,9 @@
          * @param index
          */
         function deleteGroup(obj,index){
-            var id = obj.data.id;
+            var id = obj.data.userId;
             $.ajax({
-                url:"/user/delGroup",
+                url:"/user/delUser",
                 data:{"id":id},
                 dataType:"json",
                 type:"post",

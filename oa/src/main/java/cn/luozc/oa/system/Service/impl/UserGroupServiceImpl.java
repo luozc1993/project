@@ -46,7 +46,7 @@ public class UserGroupServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(String id) {
+    public void deleteGroup(String id) {
         UserGroup userGroup = new UserGroup();
         userGroup.setGroupId(id);
         userGroupDao.delete(userGroup);
@@ -70,5 +70,12 @@ public class UserGroupServiceImpl implements UserService {
     public List<SysUser> findPage(int page, int limit) {
         PageRequest pageable = PageRequest.of(page, limit);
         return userDao.findAll(pageable).getContent();
+    }
+
+    @Override
+    public void deleteUser(String id) {
+        SysUser user = new SysUser();
+        user.setUserId(id);
+        userDao.delete(user);
     }
 }

@@ -98,7 +98,7 @@ public class UserController {
     @ResponseBody
     public JsonData delGroup(String id){
         identityService.deleteGroup(id);
-        userService.delete(id);
+        userService.deleteGroup(id);
         return JsonData.success("","删除成功");
     }
 
@@ -155,6 +155,19 @@ public class UserController {
         identityService.saveUser(user);
         //添加到系统表
         return JsonData.success(userService.update(sysUser),"保存成功");
+    }
+
+    /**
+     * 删除用户
+     * @param id    id
+     * @return  ss
+     */
+    @RequestMapping(value = "/delUser")
+    @ResponseBody
+    public JsonData delUser(String id){
+        identityService.deleteUser(id);
+        userService.deleteUser(id);
+        return JsonData.success("","删除成功");
     }
 
 }
