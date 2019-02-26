@@ -35,12 +35,12 @@
                    lay-verify="email" required/>
         </div>
     </div>
-    <div class="layui-form-item">
+    <!--<div class="layui-form-item">
         <label class="layui-form-label">密码</label>
         <div class="layui-input-block">
             <input name="password"  type="password" class="layui-input" maxlength="20"  required/>
         </div>
-    </div>
+    </div>-->
 
     <div class="layui-form-item text-right">
         <button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
@@ -72,19 +72,30 @@
         // 表单提交事件
         form.on('submit(btnSubmit)', function (data) {
             layer.load(2);
-            console.log(data.field)
-            $.get(url, data.field, function (data) {
-                layer.closeAll('loading');
-                console.log(data)
-                if (data.status) {
-                    top.layer.msg(data.msg, {icon: 1});
-                    admin.putTempData('formOk', true);  // 操作成功刷新表格
-                    // 关闭当前iframe弹出层
-                    admin.closeThisDialog();
-                } else {
-                    top.layer.msg(data.msg, {icon: 2});
+            console.log(data.field);
+            $.ajax({
+                url:url,
+                data:data.field,
+                dataType:"json",
+                type:"POST",
+                success:function(data){
+                    if (data.status) {
+                        top.layer.msg(data.msg, {icon: 1});
+                        admin.putTempData('formOk', true);  // 操作成功刷新表格
+                        // 关闭当前iframe弹出层
+                        admin.closeThisDialog();
+                    } else {
+                        top.layer.msg(data.msg, {icon: 2});
+                    }
+                },
+                error:function(){
+                    top.layer.msg("系统错误", {icon: 2});
+                },
+                complete:function () {
+                    layer.closeAll('loading');
                 }
-            }, 'json');
+            })
+
             return false;
         });
     });

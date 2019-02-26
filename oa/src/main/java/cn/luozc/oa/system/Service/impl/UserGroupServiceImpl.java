@@ -9,6 +9,10 @@ import cn.luozc.oa.system.model.UserGroup;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,28 +27,29 @@ public class UserGroupServiceImpl implements UserService {
 
     @Override
     public List<UserGroup> findAll() {
-        Wrapper wrapper = new EntityWrapper();
-        return userGroupDao.selectMaps(wrapper);
+        return userGroupDao.findAll();
     }
 
     @Override
-    public int count() {
-        return userGroupDao.selectCount(new EntityWrapper<UserGroup>());
+    public long count() {
+        return userGroupDao.count();
     }
 
     @Override
-    public int insert(UserGroup userGroup) {
-        return userGroupDao.insertAllColumn(userGroup);
+    public UserGroup insert(UserGroup userGroup) {
+        return userGroupDao.save(userGroup);
     }
 
     @Override
-    public int update(UserGroup userGroup) {
-        return userGroupDao.updateAllColumnById(userGroup);
+    public UserGroup update(UserGroup userGroup) {
+        return userGroupDao.save(userGroup);
     }
 
     @Override
-    public int delete(String id) {
-        return  userGroupDao.deleteById(id);
+    public void delete(String id) {
+        UserGroup userGroup = new UserGroup();
+        userGroup.setGroupId(id);
+        userGroupDao.delete(userGroup);
     }
 
 
@@ -52,14 +57,18 @@ public class UserGroupServiceImpl implements UserService {
     @Resource private UserDao userDao;
 
     @Override
-    public int insert(SysUser user) {
-        return userDao.insert(user);
+    public SysUser insert(SysUser user) {
+        return userDao.save(user);
+    }
+
+    @Override
+    public SysUser update(SysUser user) {
+        return userDao.save(user);
     }
 
     @Override
     public List<SysUser> findPage(int page, int limit) {
-        RowBounds rowBounds = new RowBounds(page,limit);
-
-        return userDao.selectPage(rowBounds,new EntityWrapper<>());
+        PageRequest pageable = PageRequest.of(page, limit);
+        return userDao.findAll(pageable).getContent();
     }
 }

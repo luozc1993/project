@@ -4,12 +4,20 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 
-@TableName("sys_user_group")
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity //声明一个实体，用的是Java规范下的注解
+@Table(name = "sys_user_group") //映射的表名称
 public class UserGroup {
 
-    @TableField
+    @Id
     private String groupId;
-    @TableField
+
+    @Column
     private String name;
 
     public String getGroupId() {

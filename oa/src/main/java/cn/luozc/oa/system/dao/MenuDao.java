@@ -1,13 +1,10 @@
 package cn.luozc.oa.system.dao;
 
-import cn.luozc.oa.system.model.Menu;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import cn.luozc.oa.system.model.SysMenu;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface MenuDao extends BaseMapper<Menu> {
+public interface MenuDao extends JpaRepository<SysMenu, Integer> {
 
-    List<Menu> findMenus();
 }

@@ -57,6 +57,7 @@
             }else{
                 user = data.field;
             }
+
             $.get(url, user, function (data) {
                 layer.closeAll('loading');
                 console.log(data)

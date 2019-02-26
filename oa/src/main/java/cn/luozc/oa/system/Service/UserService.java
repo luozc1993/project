@@ -1,6 +1,6 @@
 package cn.luozc.oa.system.Service;
 
-import cn.luozc.oa.system.model.Menu;
+import cn.luozc.oa.system.model.SysMenu;
 import cn.luozc.oa.system.model.SysUser;
 import cn.luozc.oa.system.model.UserGroup;
 
@@ -11,15 +11,17 @@ public interface UserService {
     //查询所有数据
     List<UserGroup> findAll();
 
-    int count();
+    long count();
 
-    int insert(UserGroup userGroup);
+    UserGroup insert(UserGroup userGroup);
 
-    int update(UserGroup userGroup);
+    UserGroup update(UserGroup userGroup);
 
-    int delete(String id);
+    void delete(String id);
 
-    int insert(SysUser user);
+    SysUser insert(SysUser user);
+
+    SysUser update(SysUser user);
 
     List<SysUser> findPage(int page,int limit);
 

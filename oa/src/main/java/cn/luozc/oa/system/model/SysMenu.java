@@ -1,13 +1,18 @@
 package cn.luozc.oa.system.model;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@TableName("sys_menu")
-public class Menu {
+@Entity //声明一个实体，用的是Java规范下的注解
+@Table(name = "sys_user") //映射的表名称
+public class SysMenu {
 
+    @Id
     private String id;
 
+    @Column
     private String name;
 
     public String getId() {

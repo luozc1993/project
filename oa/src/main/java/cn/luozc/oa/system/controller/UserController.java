@@ -4,6 +4,7 @@ import cn.luozc.oa.system.Service.UserService;
 import cn.luozc.oa.system.model.SysUser;
 import cn.luozc.oa.system.model.UserGroup;
 import cn.luozc.utils.JsonData;
+import cn.luozc.utils.LayuiTableResult;
 import cn.luozc.utils.MD5Util;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -17,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.swing.plaf.LayerUI;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
 @Controller
 @RequestMapping("/user")
+@Transactional
 public class UserController {
 
     @Resource private IdentityService identityService;
@@ -41,15 +45,10 @@ public class UserController {
      */
     @RequestMapping(value = "/groupListData")
     @ResponseBody
-    public Object groupListData(int page,int limit ){
+    public LayuiTableResult groupListData(int page,int limit ){
         List<Group> list = identityService.createGroupQuery().listPage((page-1)*limit,limit);
         long count = identityService.createGroupQuery().count();
-        JSONObject json = new JSONObject();
-        json.put("code",0);
-        json.put("msg","");
-        json.put("count",count);
-        json.put("data",list);
-        return json;
+        return new LayuiTableResult(0,"",count,list);
     }
 
     /**
@@ -113,16 +112,10 @@ public class UserController {
      */
     @RequestMapping(value = "/userListData")
     @ResponseBody
-    public Object userListData(int page,int limit ){
-
+    public LayuiTableResult userListData(int page,int limit ){
         long count = identityService.createUserQuery().count();
-        JSONObject json = new JSONObject();
-        json.put("code",0);
-        json.put("msg","");
-        json.put("count",count);
-        json.put("data",userService.findPage((page-1)*limit,limit));
-
-        return json;
+        List<SysUser> list = userService.findPage((page - 1) * limit, limit);
+        return new LayuiTableResult(0,"",count,list);
     }
 
     /**
@@ -133,7 +126,7 @@ public class UserController {
     @ResponseBody
     public JsonData addUser(SysUser sysUser){
         String userId = UUID.randomUUID().toString();
-        sysUser.setPassword(MD5Util.getMD5Str(sysUser.getPassword()));
+        sysUser.setPassword(MD5Util.getMD5Str("123456"));
         //添加activiti用户表
         User user = identityService.newUser(userId);
         user.setLastName(sysUser.getLastName());
@@ -145,6 +138,23 @@ public class UserController {
         sysUser.setUserId(userId);
         userService.insert(sysUser);
         return JsonData.success(sysUser,"保存成功");
+    }
+
+    /**
+     * 添加用户组
+     * @return      提示
+     */
+    @RequestMapping(value = "/updateUser")
+    @ResponseBody
+    public JsonData updateUser(SysUser sysUser){
+        //添加activiti用户表
+        User user = identityService.createUserQuery().userId(sysUser.getUserId()).singleResult();
+        user.setLastName(sysUser.getLastName());
+        user.setEmail(sysUser.getEmail());
+        user.setFirstName(sysUser.getFirstName());
+        identityService.saveUser(user);
+        //添加到系统表
+        return JsonData.success(userService.update(sysUser),"保存成功");
     }
 
 }
