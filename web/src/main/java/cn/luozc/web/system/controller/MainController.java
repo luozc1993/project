@@ -9,6 +9,7 @@ import cn.luozc.web.common.utils.StringUtil;
 import cn.luozc.web.common.utils.UserAgentGetter;
 import cn.luozc.web.system.model.Authorities;
 import cn.luozc.web.system.model.LoginRecord;
+import org.activiti.engine.IdentityService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,8 @@ public class MainController extends BaseController implements ErrorController {
     private AuthoritiesService authoritiesService;
     @Autowired
     private LoginRecordService loginRecordService;
+    @Autowired
+    private IdentityService identityService;
 
     /**
      * 主页
@@ -44,7 +47,8 @@ public class MainController extends BaseController implements ErrorController {
         List<Map<String, Object>> menuTree = getMenuTree(authorities, -1);
         model.addAttribute("menus", menuTree);
         model.addAttribute("loginUser", getLoginUser());
-        return "public.html";
+        System.err.println(identityService);
+        return "index.html";
     }
 
     /**

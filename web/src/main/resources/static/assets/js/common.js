@@ -17,14 +17,14 @@ layui.config({
     var element = layui.element;
 
     // 单标签模式需要根据子页面的地址联动侧边栏的选中，用于适配浏览器前进后退按钮
-    if (window !== top && top.layui && top.layui.index && !top.layui.index.pageTabs) {
+    if (window != top && top.layui && top.layui.index && !top.layui.index.pageTabs) {
         top.layui.admin.activeNav(location.href.substring(getProjectUrl().length));
     }
 
     // 移除loading动画
     setTimeout(function () {
         admin.removeLoading();
-    }, window === top ? 300 : 150);
+    }, window == top ? 300 : 150);
 
 });
 

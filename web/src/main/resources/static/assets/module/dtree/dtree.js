@@ -961,7 +961,7 @@ layui.define(['jquery','layer','form'], function(exports) {
 			if(_this.toolbarLoad == "leaf") { if(isLast){ div += " d-contextmenu='true'>"; } else { div += " d-contextmenu='false'>";} }
 		} else { div += " d-contextmenu='false'>"; }
 
-		var li = ["<li " + "class='"+LI_CLICK_CHECKBAR+" "+ LI_NAV_ITEM +"'" + "data-id='"+treeId+"'" + "data-pid='"+(flag == "root" ? (parentId ? parentId : "-1") : parentId)+"'" + "dtree-id='"+rootId+"'" + "data-public='"+level+"'" + ">" +
+		var li = ["<li " + "class='"+LI_CLICK_CHECKBAR+" "+ LI_NAV_ITEM +"'" + "data-id='"+treeId+"'" + "data-pid='"+(flag == "root" ? (parentId ? parentId : "-1") : parentId)+"'" + "dtree-id='"+rootId+"'" + "data-index='"+level+"'" + ">" +
 		          	div ,
 					dom.fnode(),
 					dom.node(),
@@ -2081,7 +2081,7 @@ layui.define(['jquery','layer','form'], function(exports) {
 		temp_node.parentId = $div.parent().attr("data-pid");
 		temp_node.context = $div.find("cite[data-leaf]").eq(0).text();
 		temp_node.isLeaf = $div.find("cite[data-leaf]").eq(0).attr("data-leaf") == "leaf" ? true : false;
-		temp_node.level = $div.parent().attr("data-public");
+		temp_node.level = $div.parent().attr("data-index");
 		temp_node.spread = $div.find("i[data-spread]").eq(0).attr("data-spread") == "open" ? true : false;
 		temp_node.basicData = $div.attr("data-basic");
 		temp_node.recordData = $div.attr("data-record");
@@ -2198,7 +2198,7 @@ layui.define(['jquery','layer','form'], function(exports) {
 		_this.node.parentId = $div.parent().attr("data-pid");
 		_this.node.context = $div.find("cite[data-leaf]").eq(0).text();
 		_this.node.isLeaf = $div.find("cite[data-leaf]").eq(0).attr("data-leaf") == "leaf" ? true : false;
-		_this.node.level = $div.parent().attr("data-public");
+		_this.node.level = $div.parent().attr("data-index");
 		_this.node.spread = $div.find("i[data-spread]").eq(0).attr("data-spread") == "open" ? true : false;
 		_this.node.basicData = $div.attr("data-basic");
 		_this.node.recordData = $div.attr("data-record");
@@ -2240,7 +2240,7 @@ layui.define(['jquery','layer','form'], function(exports) {
 		temp_node.parentId = $div.parent().attr("data-pid");
 		temp_node.context = $div.find("cite[data-leaf]").eq(0).text();
 		temp_node.isLeaf = $div.find("cite[data-leaf]").eq(0).attr("data-leaf") == "leaf" ? true : false;
-		temp_node.level = $div.parent().attr("data-public");
+		temp_node.level = $div.parent().attr("data-index");
 		temp_node.spread = $div.find("i[data-spread]").eq(0).attr("data-spread") == "open" ? true : false;
 		temp_node.basicData = $div.attr("data-basic");
 		temp_node.recordData = $div.attr("data-record");
@@ -2375,7 +2375,7 @@ layui.define(['jquery','layer','form'], function(exports) {
 				$cite = $div.find("cite"),
 				node = _this.getNodeParam($div),
 				$ul = $div.next("ul"),
-				$p_li = $div.parent("li[data-public]"),	//当前选中节点的顶级li节点
+				$p_li = $div.parent("li[data-index]"),	//当前选中节点的顶级li节点
 				$p_ul = $p_li.parent("ul");
 			var $toolBarDiv = _this.obj.prevAll('div#dtree_toolbar_'+_this.obj[0].id);
 			$toolBarDiv.find(".layui-nav-child").removeClass('layui-anim-fadein layui-show');
@@ -2398,7 +2398,7 @@ layui.define(['jquery','layer','form'], function(exports) {
 				$cite = $div.find("cite"),
 				node = _this.getNodeParam($div),
 				$ul = $div.next("ul"),
-				$p_li = $div.parent("li[data-public]"),	//当前选中节点的顶级li节点
+				$p_li = $div.parent("li[data-index]"),	//当前选中节点的顶级li节点
 				$p_ul = $p_li.parent("ul");
 			var $toolBarDiv = _this.obj.prevAll('div#dtree_toolbar_'+_this.obj[0].id);
 			$toolBarDiv.find(".layui-nav-child").removeClass('layui-anim-fadein layui-show');
@@ -2430,7 +2430,7 @@ layui.define(['jquery','layer','form'], function(exports) {
 				$cite = $div.find("cite"),
 				node = _this.getNodeParam($div),
 				$ul = $div.next("ul"),
-				$p_li = $div.parent("li[data-public]"),	//当前选中节点的顶级li节点
+				$p_li = $div.parent("li[data-index]"),	//当前选中节点的顶级li节点
 				$p_ul = $p_li.parent("ul");
 			var $toolBarDiv = _this.obj.prevAll('div#dtree_toolbar_'+_this.obj[0].id);
 			$toolBarDiv.find(".layui-nav-child").removeClass('layui-anim-fadein layui-show');
@@ -2483,7 +2483,7 @@ layui.define(['jquery','layer','form'], function(exports) {
 			var $div = _this.getNowNode(),
 				node = _this.getNodeParam($div),
 				$ul = $div.next("ul"),
-				$p_li = $div.parent("li[data-public]"),	//当前选中节点的顶级li节点
+				$p_li = $div.parent("li[data-index]"),	//当前选中节点的顶级li节点
 				$p_ul = $p_li.parent("ul"),	//当前选中节点的顶级li节点的父级ul
 				$p_div = $p_ul.prev("div"), //当前选中节点的顶级li节点的父级ul的前一个div
 				$cite = $div.children("cite"),	//当前选中节点的text
@@ -2508,7 +2508,7 @@ layui.define(['jquery','layer','form'], function(exports) {
 									id = $div.attr("data-id")+"_node_"+$ul[0].childNodes.length,
 									isLeaf = true,
 									isChecked = "0",
-									level = parseInt($p_li.attr("data-public"))+1;
+									level = parseInt($p_li.attr("data-index"))+1;
 
 								// 创建子节点的DOM，添加子节点
 								var checkArr = [];
