@@ -15,6 +15,7 @@ import cn.luozc.web.system.dao.UserRoleMapper;
 import cn.luozc.web.system.model.Role;
 import cn.luozc.web.system.model.User;
 import cn.luozc.web.system.model.UserRole;
+import org.activiti.engine.IdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,8 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired private IdentityService identityService;
 
     @Override
     public User getByUsername(String username) {
@@ -71,6 +74,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setCreateTime(new Date());
         boolean rs = baseMapper.insert(user) > 0;
         if (rs) {
+
+            saveActivitiUser(user);
+
             List<Integer> roleIds = getRoleIds(user.getRoles());
             if (userRoleMapper.insertBatch(user.getUserId(), roleIds) < roleIds.size()) {
                 throw new BusinessException("添加失败，请重试");
@@ -79,12 +85,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return rs;
     }
 
+    private void saveActivitiUser(User user){
+        org.activiti.engine.identity.User activitiUser = identityService.newUser(user.getUserId() + "");
+        activitiUser.setFirstName(user.getUsername());
+        activitiUser.setLastName(user.getNickName());
+        activitiUser.setEmail(user.getEmail());
+        activitiUser.setPassword(user.getPassword());
+        identityService.saveUser(activitiUser);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean update(User user) {
         user.setUsername(null);
         boolean rs = baseMapper.updateById(user) > 0;
         if (rs) {
+            updateActivitiUser(user);
             userRoleMapper.delete(new EntityWrapper().eq("user_id", user.getUserId()));
             List<Integer> roleIds = getRoleIds(user.getRoles());
             if (userRoleMapper.insertBatch(user.getUserId(), roleIds) < roleIds.size()) {
@@ -92,6 +108,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             }
         }
         return rs;
+    }
+
+    private void updateActivitiUser(User user){
+        org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(user.getUserId()+"").singleResult();
+        activitiUser.setFirstName(user.getUsername());
+        activitiUser.setLastName(user.getNickName());
+        activitiUser.setEmail(user.getEmail());
+        activitiUser.setPassword(user.getPassword());
+        identityService.saveUser(activitiUser);
     }
 
     /**

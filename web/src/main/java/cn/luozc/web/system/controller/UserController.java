@@ -10,6 +10,7 @@ import cn.luozc.web.common.utils.StringUtil;
 import cn.luozc.web.system.model.Role;
 import cn.luozc.web.system.model.User;
 import cn.luozc.web.system.service.RoleService;
+import org.activiti.engine.IdentityService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,8 @@ public class UserController extends BaseController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+
+
 
 
     @RequiresPermissions("user:view")
