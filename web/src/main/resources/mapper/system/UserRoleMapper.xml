@@ -17,4 +17,10 @@
             (#{userId},#{roleId},SYSDATE())
         </foreach>
     </insert>
+    <delete id="deleteByUserId" >
+        delete from sys_user_role where user_id=${userId}
+    </delete>
+    <delete id="deleteByRoleId" >
+        delete from sys_user_role where role_id=${roleId}
+    </delete>
 </mapper>

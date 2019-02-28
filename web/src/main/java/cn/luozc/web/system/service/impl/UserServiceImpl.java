@@ -1,5 +1,6 @@
 package cn.luozc.web.system.service.impl;
 
+import cn.luozc.web.system.dao.LoginRecordMapper;
 import cn.luozc.web.system.service.UserService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
@@ -28,6 +29,9 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private LoginRecordMapper loginRecordMapper;
 
     @Autowired private IdentityService identityService;
 
@@ -159,6 +163,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public boolean delete(Integer userId) {
         return baseMapper.deleteById(userId) > 0;
+    }
+
+    @Override
+    public boolean deleteUser(Integer userId) {
+        //删除角色关联数据
+        userRoleMapper.deleteByUserId(userId);
+        //删除登录记录
+        loginRecordMapper.delete(userId);
+        //删除用户数据
+        baseMapper.deleteById(userId);
+        identityService.deleteUser(userId+"");
+        return true;
     }
 
     private List<Integer> getUserIds(List<User> userList) {

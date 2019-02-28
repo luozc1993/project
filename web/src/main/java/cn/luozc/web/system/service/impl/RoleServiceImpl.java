@@ -1,5 +1,6 @@
 package cn.luozc.web.system.service.impl;
 
+import cn.luozc.web.system.dao.UserRoleMapper;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import cn.luozc.web.common.exception.ParameterException;
@@ -7,6 +8,9 @@ import cn.luozc.web.system.dao.RoleAuthoritiesMapper;
 import cn.luozc.web.system.dao.RoleMapper;
 import cn.luozc.web.system.model.Role;
 import cn.luozc.web.system.service.RoleService;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.identity.Group;
+import org.activiti.engine.identity.GroupQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +24,11 @@ public class RoleServiceImpl implements RoleService {
     private RoleMapper roleMapper;
     @Autowired
     private RoleAuthoritiesMapper roleAuthoritiesMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private IdentityService identityService;
 
     @Override
     public List<Role> getByUserId(Integer userId) {
@@ -38,12 +47,21 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public boolean add(Role role) {
         role.setCreateTime(new Date());
-        return roleMapper.insert(role) > 0;
+        Integer insert = roleMapper.insert(role);
+        Group group = identityService.newGroup(role.getRoleId() + "");
+        group.setName(role.getRoleName());
+        group.setType("oa");
+        identityService.saveGroup(group);
+        return insert > 0;
     }
 
     @Override
     public boolean update(Role role) {
-        return roleMapper.updateById(role) > 0;
+        Integer integer = roleMapper.updateById(role);
+        Group group = identityService.createGroupQuery().groupId(role.getRoleId() + "").singleResult();
+        group.setName(role.getRoleName());
+        identityService.saveGroup(group);
+        return integer> 0;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -57,6 +75,8 @@ public class RoleServiceImpl implements RoleService {
         role.setIsDelete(isDelete);
         boolean rs = roleMapper.updateById(role) > 0;
         if (rs) {
+            identityService.deleteGroup(roleId+"");
+
             //删除角色的权限
             roleAuthoritiesMapper.delete(new EntityWrapper().eq("role_id", roleId));
         }
@@ -70,6 +90,16 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public boolean delete(Integer roleId) {
-        return roleMapper.deleteById(roleId) > 0;
+        userRoleMapper.deleteByRoleId(roleId);
+        Integer integer = roleMapper.deleteById(roleId);
+        if(integer>0){
+            identityService.deleteGroup(roleId+"");
+
+            //删除角色的权限
+            roleAuthoritiesMapper.delete(new EntityWrapper().eq("role_id", roleId));
+            return true;
+        }
+
+        return false;
     }
 }

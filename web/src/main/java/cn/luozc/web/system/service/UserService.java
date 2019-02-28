@@ -24,4 +24,6 @@ public interface UserService extends IService<User> {
 
     boolean delete(Integer userId);
 
+    boolean deleteUser(Integer userId);
+
 }

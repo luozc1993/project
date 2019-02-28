@@ -101,7 +101,7 @@ public class RoleController {
     @ResponseBody
     @RequestMapping("/delete")
     public JsonResult delete(Integer roleId) {
-        if (roleService.updateState(roleId, 1)) {
+        if (roleService.delete(roleId)) {
             return JsonResult.ok("删除成功");
         }
         return JsonResult.error("删除失败");

@@ -19,4 +19,7 @@
         </where>
         ORDER BY a.create_time DESC
     </select>
+    <delete id="delete">
+        delete from sys_login_record where user_id=${userId}
+    </delete>
 </mapper>

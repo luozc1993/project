@@ -14,6 +14,7 @@ import org.activiti.engine.IdentityService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/system/user")
+@Transactional
 public class UserController extends BaseController {
     @Autowired
     private UserService userService;
@@ -97,6 +99,7 @@ public class UserController extends BaseController {
         }
     }
 
+
     private List<Role> getRoles(String roleStr) {
         List<Role> roles = new ArrayList<>();
         String[] split = roleStr.split(",");
@@ -158,7 +161,21 @@ public class UserController extends BaseController {
         }
     }
 
+    /**
+     * 修改用户
+     **/
+    @RequiresPermissions("user:delete")
+    @ResponseBody
+    @RequestMapping("/deleteUser")
+    public JsonResult deleteUser(int userId) {
+        boolean delete = userService.deleteUser(userId);
+        if(delete){
+            return JsonResult.ok("删除成功");
+        }else{
+            return JsonResult.error("删除失败");
+        }
 
+    }
 
 
 }

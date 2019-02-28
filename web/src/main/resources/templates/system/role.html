@@ -105,18 +105,31 @@
         // 删除
         function doDelete(obj) {
             top.layer.confirm('确定要删除吗？', function () {
+                top.layer.closeAll();
                 layer.load(2);
-                $.post('role/delete', {
-                    roleId: obj.data.roleId
-                }, function (data) {
-                    layer.closeAll('loading');
-                    if (data.code == 200) {
-                        layer.msg(data.msg, {icon: 1});
-                        obj.del();
-                    } else {
-                        layer.msg(data.msg, {icon: 2});
+                $.ajax({
+                    url:'role/delete',
+                    data:{"roleId":obj.data.roleId},
+                    dataType:"json",
+                    type:"post",
+                    success:function(data){
+                        layer.closeAll('loading');
+                        if (data.code == 200) {
+                            layer.msg(data.msg, {icon: 1});
+                            obj.del();
+                        } else {
+                            layer.msg(data.msg, {icon: 2});
+                        }
+                    },
+                    error:function(){
+                        layer.msg('删除失败', {icon: 2});
+                    },
+                    complete:function(){
+                        layer.closeAll('loading');
                     }
-                });
+                })
+
+
             });
         }
 

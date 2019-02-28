@@ -54,6 +54,7 @@
 <script type="text/html" id="tableBar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-xs" lay-event="reset">重置密码</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
 </script>
 
 <!-- 表格状态列 -->
@@ -83,16 +84,16 @@
                 {type: 'checkbox'},
                 {field: 'username',  title: '账号'},
                 {field: 'nickName',  title: '用户名'},
-                {field: 'phone', title: '手机号'},
-                {field: 'email',  title: '邮件'},
+                {field: 'phone', title: '手机号',width:120},
+                {field: 'email',  title: '邮件',width:180},
                 {field: 'sex',  title: '性别',width:60},
                 {
                     sort: true, templet: function (d) {
                         return util.toDateString(d.createTime);
-                    }, title: '创建时间'
+                    }, title: '创建时间',width:160
                 },
-                {field: 'state', sort: true, templet: '#tbaleState', title: '状态'},
-                {align: 'center', toolbar: '#tableBar', title: '操作'}
+                {field: 'state',  templet: '#tbaleState', title: '状态',width:80},
+                {align: 'center', toolbar: '#tableBar', title: '操作' ,width:190}
             ]]
         });
 
@@ -117,6 +118,11 @@
                 showEditModel(data);
             } else if (layEvent === 'reset') { // 重置密码
                 resetPsw(obj.data.userId);
+            }else if (layEvent === 'delete') { // 重置密码
+                top.layer.confirm('确定删除该用户吗', function (i) {
+                    deleteUser(obj);
+                })
+
             }
         });
 
@@ -181,6 +187,30 @@
             });
         }
 
+        function deleteUser(obj){
+            top.layer.closeAll();
+            layer.load(2);
+            $.ajax({
+                url:"/system/user/deleteUser",
+                data:{"userId":obj.data.userId},
+                dataType:"json",
+                type:"post",
+                success:function(res){
+                    if(res.code==200){
+                        layer.msg('删除成功', {icon: 1});
+                        obj.del();
+                    }else{
+                        layer.msg('删除失败', {icon: 2});
+                    }
+                },
+                error:function(){
+                    layer.msg('删除失败', {icon: 2});
+                },
+                complete:function(){
+                    layer.closeAll('loading');
+                }
+            })
+        }
     });
 </script>
 
