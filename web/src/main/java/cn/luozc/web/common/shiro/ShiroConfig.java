@@ -37,6 +37,8 @@ public class ShiroConfig {
         filterChainDefinitions.put("/api/**", "anon");
         filterChainDefinitions.put("/druid/**", "anon");
         filterChainDefinitions.put("/login", "anon");
+        filterChainDefinitions.put("/page/layuiForm/**", "anon");
+        filterChainDefinitions.put("*.json", "anon");
         filterChainDefinitions.put("/logout", "logout");
         filterChainDefinitions.put("/**", "myLoginFilter,authc");
         shiroFilter.setFilterChainDefinitionMap(filterChainDefinitions);

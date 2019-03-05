@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html class="bg-white">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>添加/修改用户</title>
+    <base href="${ctxPath}">
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/assets/module/admin.css"/>
+    <link rel="stylesheet" href="/assets/module/formSelects/formSelects-v4.css"/>
+</head>
+
+<body >
+<!-- 正文开始 -->
+<div class="layui-fluid" >
+    <div class="layui-card">
+        <div class="layui-card-body">
+
+            <div id="form" ></div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- js部分 -->
+<script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="/assets/js/common.js"></script>
+<script>
+    layui.config({
+        base : "/assets/module/dynamicForm/"
+    }).extend({
+        dynamicForm : "dynamicForm"
+    });
+    layui.use(['dynamicForm','form','layer','jquery'],function(){
+        var form = layui.form;
+
+        $ = layui.$;
+        var tab = layui.dynamicForm;
+        console.log("${forms}");
+        $.ajax({
+            url:"/json/flow/form.json",
+            type:"get",
+            success:function(res){
+                console.log(res.data);
+                tab.form({
+                    id:"#form",
+                    title:"",
+                    showBtn:true,
+                    yesBtnName:"",
+                    data:res.data,
+                    success:function(obj){
+                        console.log(obj)
+                    },
+                    yes:function(obj){
+                        console.log(obj)
+                    },
+                    cancel:function(obj){
+                        console.log(obj)
+                    }
+                });
+            }
+        })
+
+
+
+    })
+</script>
+
+</body>
+</html>

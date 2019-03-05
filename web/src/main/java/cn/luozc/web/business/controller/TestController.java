@@ -14,6 +14,7 @@ import org.activiti.engine.task.TaskQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,13 +35,15 @@ public class TestController {
     private RepositoryService repositoryService;
 
     @RequestMapping("list")
+    @ResponseBody
     public Object list(){
         List<Model> list = repositoryService.createModelQuery().list();
-        System.err.println(list);
+        System.err.println(list.size());
         return list;
     }
 
     @RequestMapping("/start")
+    @ResponseBody
     public void start(){
         System.out.println("method startActivityDemo begin....");
         Map<String,Object> map = new HashMap<String,Object>();

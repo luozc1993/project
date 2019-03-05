@@ -1,0 +1,54 @@
+{
+	"code": 0,
+	"msg": "",
+	"count": 1000,
+	"data": [{
+		"key": "key",
+		"type": "text-input",
+		"label": "标识",
+		"tips": "请输入标识",
+		"value": "",
+		"col": 12
+	},
+	{
+		"key": "type",
+		"type": "text-input",
+		"label": "表单类型",
+		"tips": "请输入表单类型",
+		"value": "",
+		"col": 12
+	},
+	{
+		"key": "label",
+		"type": "text-input",
+		"label": "",
+		"tips": "请输入标签名称",
+		"value": "",
+		"col": 12
+	},
+	{
+		"key": "tips",
+		"type": "text-input",
+		"label": "提示内容",
+		"tips": "请输入提示内容",
+		"value": "",
+		"col": 12
+	},
+	{
+		"key": "value",
+		"type": "text-input",
+		"label": "默认值",
+		"tips": "请输入提示默认值",
+		"value": "",
+		"col": 12
+	},
+	{
+		"key": "col",
+		"type": "select",
+		"label": "占位",
+		"tips": "请输入提示默认值",
+		"value": "1&1|2&2$2&2",
+		"col": 12
+	}
+]
+}

@@ -47,7 +47,6 @@ public class MainController extends BaseController implements ErrorController {
         List<Map<String, Object>> menuTree = getMenuTree(authorities, -1);
         model.addAttribute("menus", menuTree);
         model.addAttribute("loginUser", getLoginUser());
-        System.err.println(identityService);
         return "index.html";
     }
 
