@@ -1,6 +1,6 @@
 // 以下代码是配置layui扩展模块的目录，每个页面都需要引入
 layui.config({
-    base: getProjectUrl() + 'assets/module/'
+    base:  '/assets/module/'
 }).extend({
     formSelects: 'formSelects/formSelects-v4',
     treetable: 'treetable-lay/treetable',
@@ -9,7 +9,8 @@ layui.config({
     step: 'step-lay/step',
     dtree: 'dtree/dtree',
     citypicker: 'city-picker/city-picker',
-    tableSelect: 'tableSelect/tableSelect'
+    tableSelect: 'tableSelect/tableSelect',
+    dynamicForm : "dynamicForm/dynamicForm"
 }).use(['layer', 'admin', 'element'], function () {
     var $ = layui.jquery;
     var layer = layui.layer;

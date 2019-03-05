@@ -33,7 +33,6 @@ layui.define(['layer', 'form','jquery','laydate'], function(exports){
 				dynamicForm.createForm(data)
 			});
             //是否显示确定按钮
-            console.log(showBtn)
             if(showBtn){
                 //确定取消按钮
                 dynamicFormBom.append('<div class="layui-form-item layui-row layui-col-xs12" style="    margin: 20px 0px;">'

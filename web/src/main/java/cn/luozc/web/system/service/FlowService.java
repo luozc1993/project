@@ -7,4 +7,6 @@ public interface FlowService {
 
     PageResult<Flow> list(int pageNum, int pageSize, String searchValue);
 
+    Flow findById(int id);
+
 }

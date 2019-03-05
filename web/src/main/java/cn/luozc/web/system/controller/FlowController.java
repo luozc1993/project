@@ -6,6 +6,8 @@ import cn.luozc.web.system.model.Role;
 import cn.luozc.web.system.model.SysForm;
 import cn.luozc.web.system.service.FlowService;
 import cn.luozc.web.system.service.FormService;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +30,9 @@ public class FlowController {
     @RequestMapping("/flow")
     public String flow(Model model) {
         List<SysForm> list = formService.list(2, 1);
-        model.addAttribute("forms", list);
+        String s = JSONArray.toJSONString(list);
+        model.addAttribute("forms", s);
+
         return "system/flow/flow.html";
     }
     @RequiresPermissions("flow:list")
@@ -39,7 +43,22 @@ public class FlowController {
     }
 
     @RequestMapping("/editForm")
-    public String addUser(Model model) {
+    public String addUser(Model model,int id) {
+        List<SysForm> list = formService.list(2, 1);
+        if(id!=0){
+            Flow flow = flowService.findById(id);
+            JSONObject json = JSONObject.parseObject(JSONObject.toJSONString(flow));
+            for (SysForm sysForm:list) {
+                String key = sysForm.getKey();
+                sysForm.setValue(json.getString(key));
+            }
+        }
+
+
+
+
+        String s = JSONArray.toJSONString(list);
+        model.addAttribute("forms", s);
         return "system/flow/form.html";
     }
 }

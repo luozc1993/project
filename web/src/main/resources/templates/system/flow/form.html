@@ -30,40 +30,28 @@
 <script type="text/javascript" src="/assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="/assets/js/common.js"></script>
 <script>
-    layui.config({
-        base : "/assets/module/dynamicForm/"
-    }).extend({
-        dynamicForm : "dynamicForm"
-    });
     layui.use(['dynamicForm','form','layer','jquery'],function(){
         var form = layui.form;
 
         $ = layui.$;
         var tab = layui.dynamicForm;
-        console.log("${forms}");
-        $.ajax({
-            url:"/json/flow/form.json",
-            type:"get",
-            success:function(res){
-                console.log(res.data);
-                tab.form({
-                    id:"#form",
-                    title:"",
-                    showBtn:true,
-                    yesBtnName:"",
-                    data:res.data,
-                    success:function(obj){
-                        console.log(obj)
-                    },
-                    yes:function(obj){
-                        console.log(obj)
-                    },
-                    cancel:function(obj){
-                        console.log(obj)
-                    }
-                });
+        var datas = JSON.parse('${forms}');
+        tab.form({
+            id:"#form",
+            title:"",
+            showBtn:true,
+            yesBtnName:"",
+            data:datas,
+            success:function(obj){
+                console.log(obj)
+            },
+            yes:function(obj){
+                console.log(obj)
+            },
+            cancel:function(obj){
+                parent.layer.closeAll();
             }
-        })
+        });
 
 
 

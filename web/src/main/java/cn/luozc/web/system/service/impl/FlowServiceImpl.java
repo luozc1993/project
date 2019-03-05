@@ -28,4 +28,9 @@ public class FlowServiceImpl implements FlowService {
         List<Flow> userList = flowMapper.selectPage(userPage, wrapper);
         return new PageResult<Flow>(userPage.getTotal(), userList);
     }
+
+    @Override
+    public Flow findById(int id) {
+        return flowMapper.selectById(id);
+    }
 }

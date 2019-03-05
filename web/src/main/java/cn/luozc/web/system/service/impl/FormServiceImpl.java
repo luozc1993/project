@@ -28,4 +28,9 @@ public class FormServiceImpl implements FormService {
         wrapper.eq("step_id",stepId);
         return formMapper.selectList(wrapper);
     }
+
+    @Override
+    public SysForm findById(int id) {
+        return formMapper.selectById(id);
+    }
 }

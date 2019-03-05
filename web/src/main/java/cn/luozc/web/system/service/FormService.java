@@ -10,4 +10,6 @@ public interface FormService {
 
     List<SysForm> list(int flowId,int stepId);
 
+    SysForm findById(int id);
+
 }
