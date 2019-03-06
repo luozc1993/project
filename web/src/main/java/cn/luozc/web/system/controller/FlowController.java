@@ -1,5 +1,6 @@
 package cn.luozc.web.system.controller;
 
+import cn.luozc.web.common.JsonResult;
 import cn.luozc.web.common.PageResult;
 import cn.luozc.web.system.model.Flow;
 import cn.luozc.web.system.model.Role;
@@ -53,12 +54,15 @@ public class FlowController {
                 sysForm.setValue(json.getString(key));
             }
         }
-
-
-
-
         String s = JSONArray.toJSONString(list);
         model.addAttribute("forms", s);
         return "system/flow/form.html";
+    }
+
+    @RequestMapping("/addFlow")
+    @ResponseBody
+    public Object addFlow(Flow flow){
+        flowService.add(flow);
+        return JsonResult.ok();
     }
 }

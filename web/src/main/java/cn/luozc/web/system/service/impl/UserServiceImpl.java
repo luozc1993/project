@@ -21,16 +21,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-    @Autowired
+    @Resource
     private UserRoleMapper userRoleMapper;
 
-    @Autowired
+    @Resource
     private LoginRecordMapper loginRecordMapper;
 
     @Autowired private IdentityService identityService;
@@ -59,6 +60,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 for (UserRole ur : userRoles) {
                     if (one.getUserId().equals(ur.getUserId())) {
                         tempURs.add(new Role(ur.getRoleId(), ur.getRoleName()));
+
                     }
                 }
                 one.setRoles(tempURs);
@@ -85,6 +87,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             if (userRoleMapper.insertBatch(user.getUserId(), roleIds) < roleIds.size()) {
                 throw new BusinessException("添加失败，请重试");
             }
+            //添加到activiti关联
+            for (Integer roleId:roleIds) {
+                identityService.createMembership(user.getUserId()+"",roleId+"");
+            }
+
         }
         return rs;
     }
@@ -173,7 +180,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         loginRecordMapper.delete(userId);
         //删除用户数据
         baseMapper.deleteById(userId);
+        //删除用户和角色关联
         identityService.deleteUser(userId+"");
+        List<Integer> list = new ArrayList<>();
+        list.add(userId);
+        List<UserRole> userRoles = userRoleMapper.selectByUserIds(list);
+        for (UserRole userRole:userRoles) {
+            identityService.deleteMembership(userId+"",userRole.getRoleId()+"");
+        }
         return true;
     }
 

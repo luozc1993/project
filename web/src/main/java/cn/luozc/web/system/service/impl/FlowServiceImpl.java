@@ -33,4 +33,10 @@ public class FlowServiceImpl implements FlowService {
     public Flow findById(int id) {
         return flowMapper.selectById(id);
     }
+
+    @Override
+    public void add(Flow flow) {
+        Integer insert = flowMapper.insert(flow);
+        System.err.println(insert);
+    }
 }

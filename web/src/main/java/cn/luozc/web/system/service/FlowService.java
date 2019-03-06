@@ -9,4 +9,6 @@ public interface FlowService {
 
     Flow findById(int id);
 
+    void add(Flow flow);
+
 }

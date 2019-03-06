@@ -26,6 +26,7 @@ public class FormServiceImpl implements FormService {
         Wrapper<SysForm> wrapper = new EntityWrapper<>();
         wrapper.eq("flow_id",flowId);
         wrapper.eq("step_id",stepId);
+        wrapper.orderBy("sort",false);
         return formMapper.selectList(wrapper);
     }
 

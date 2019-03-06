@@ -47,6 +47,23 @@
             },
             yes:function(obj){
                 console.log(obj)
+                $.ajax({
+                    url:"/system/flow/addFlow",
+                    data:obj.field,
+                    dataType:"json",
+                    type:"post",
+                    success:function(res){
+                        console.log(res)
+
+                    },
+                    error:function(res){
+                        console.log(res)
+                    },
+                    complete:function(res){
+                        parent.layer.closeAll();
+                        console.log(res)
+                    }
+                })
             },
             cancel:function(obj){
                 parent.layer.closeAll();
