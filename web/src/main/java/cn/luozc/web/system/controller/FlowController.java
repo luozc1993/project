@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -26,6 +27,17 @@ public class FlowController {
     private FlowService flowService;
     @Autowired
     private FormService formService;
+
+
+
+    @RequestMapping("/page")
+    public String page(String m, HttpServletRequest request){
+
+        return "";
+    }
+
+
+
 
     @RequiresPermissions("flow:view")
     @RequestMapping("/flow")
