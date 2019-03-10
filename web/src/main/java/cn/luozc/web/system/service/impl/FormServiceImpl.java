@@ -1,6 +1,7 @@
 package cn.luozc.web.system.service.impl;
 
 import cn.luozc.web.system.dao.FormMapper;
+import cn.luozc.web.system.model.SysForm;
 import cn.luozc.web.system.service.FormService;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
