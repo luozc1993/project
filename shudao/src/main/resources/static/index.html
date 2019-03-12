@@ -9,15 +9,25 @@
     <link rel="stylesheet" href="/assets/ydui/ydui.px.css">
     <link rel="stylesheet" href="/assets/ydui/ydui.base.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_1079162_x3qly866um.css">
+    <link rel="stylesheet" href="/assets/share/css/share.min.css">
     <!-- 引入rem自适应类库 -->
     <script src="/assets/ydui/ydui.flexible.js"></script>
+    <!--分享插件-->
+    <script src="/assets/share/js/social-share.min.js"></script>
 
     <style type="text/css">
+        body{background-color: #f3f3f3}
         .weiKe-search{width: 100%;height: 42px;text-align: center;background-color: #fff;padding: 5px 20px}
         .weiKe-search input{
             height: 32px;width: 100%;border:1px solid indianred;
             border-radius: 20px;padding:0 10px;
         }
+        .weiKe-list .num{font-size: 12px}
+        .weiKe-list .count{height: 36px;line-height: 36px;padding:0 10px}
+        .weiKe-list .countLeft{float: left}
+        .weiKe-list .countRight{float: right}
+        .weiKe-list li{margin: 0px 0 10px 0;background-color: #fff;}
+
     </style>
 </head>
 <body>
@@ -30,21 +40,30 @@
                    <input type="search" placeholder="请输入要查询的课程名称">
                 </div>
             </div>
+            <div class="social-share"></div>
+            <div class="share-component" data-mobile-sites="weibo,qq,qzone,tencent"></div>
             <div class="weiKe-list">
                 <ul>
-                    <li v-for="item, key in list"  :key="key">
+                    <li class="card" v-for="item, key in list"  :key="key">
                         <yd-cell-item>
-                            <span slot="left">{{item.title}}}</span>
+                            <span slot="left">{{item.name}}</span>
                         </yd-cell-item>
                         <img  :src="item.img"  width="100%" >
-                        <yd-flexbox style="font-size: 14px">
-                            <yd-flexbox-item align="center" >
-                                <span class="iconfont icon-xiaoxi">(12)</span>
-                            </yd-flexbox-item>
-                            <yd-flexbox-item align="center" style="text-align: right">
-                                <span  class="iconfont icon-xiaoxi">(12)</span>
-                            </yd-flexbox-item>
-                        </yd-flexbox>
+                        <div class="count">
+                            <div class="countLeft">
+                                <span class="num">10分钟前</span>
+                            </div>
+                            <div class="countRight" style="text-align: right">
+                                <span class="iconfont icon-dianzan-mian"></span>
+                                <span class="num">(12)</span>
+                                <span class="iconfont icon-xiaoxi"></span>
+                                <span class="num">(12)</span>
+                                <span class="iconfont icon-xingxu"></span>
+                                <span class="num">(12)</span>
+                                <span class="iconfont icon-fenxiang1"></span>
+                                <span class="num">(12)</span>
+                            </div>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -74,20 +93,14 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
 <!-- 引入组件库 -->
 <script src="/assets/ydui/ydui.px.js"></script>
+<script src="/assets/jquery-3.2.1.min.js"></script>
 <script>
     new Vue({
         el: '#app',
         data() {
             return {
                 value1: '',
-                list: [
-                    {img: "//img1.shikee.com/try/2016/06/23/14381920926024616259.jpg", title: "标题111标题标题标题标题", price: 156.23, w_price: 89.36},
-                    {img: "//img1.shikee.com/try/2016/06/21/10172020923917672923.jpg", title: "标题222标题标题标题标题", price: 256.23, w_price: 89.36},
-                    {img: "//img1.shikee.com/try/2016/06/23/15395220917905380014.jpg", title: "标题333标题标题标题标题", price: 356.23, w_price: 89.36},
-                    {img: "//img1.shikee.com/try/2016/06/25/14244120933639105658.jpg", title: "标题444标题标题标题标题", price: 456.23, w_price: 89.36},
-                    {img: "//img1.shikee.com/try/2016/06/26/12365720933909085511.jpg", title: "标题555标题标题标题标题", price: 556.23, w_price: 89.36},
-                    {img: "//img1.shikee.com/try/2016/06/19/09430120929215230041.jpg", title: "标题666标题标题标题标题", price: 656.23, w_price: 89.36}
-                ]
+                list: [{"aliVideoId":"","auth":"标杆管理通过向业内或业外的最优秀企业学习，进行重新思考和改进经营实践，从而创造出最佳的经营实践。标杆","cid":"0b01517963d946f30163d9677f3e0007","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/209db617260a47b7afcb04a38e987e81/covers/ddc26b1d250349df906247584c079738-00005.jpg","lable":"体系","learnerStatus":"","name":"标杆管理的定义及作用","playUrl":"","subject":"","time":"","viewCount":""},{"aliVideoId":"","auth":"网络安全是保守企业秘密的关键因素。要想保障网络安全，预防泄密事件，我们在上网时一定要谨慎。此外，即便","cid":"0b01517963679661016372afd7b20041","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/fdd96f3030e84ac183d3cfe1c0e3ad69/covers/d20a2494b0e74c23af1164fef3ad8664-00002.jpg","lable":"体系","learnerStatus":"","name":"个人言行规范－－上网和离职","playUrl":"","subject":"","time":"","viewCount":""},{"aliVideoId":"","auth":"在工作中，有些不经意的行为，比如：在与客户、朋友的交往中，或是利用办公电脑上网时，也有可能泄露企业秘","cid":"0b01517963679661016372adf1db003d","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/2e04a94c330e46adb3f7740f29fd14e7/covers/6c4fcaa2ed86426b9894d2ffca497676-00005.jpg","lable":"体系","learnerStatus":"","name":"个人言行规范－－社交","playUrl":"","subject":"","time":"","viewCount":""},{"aliVideoId":"","auth":"常见企业秘密多是以文件形式存在的，不论是书面文件还是电子文件。我们需要了解在文件信息管理中的一些保密","cid":"0b01517963679661016372aa9ef7003c","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/c936cd78b60e4a28bb9d48b9be5e01f8/covers/8b8e51ffd0464ad0b87308d296f44e30-00005.jpg","lable":"体系","learnerStatus":"","name":"文件信息管理","playUrl":"","subject":"","time":"","viewCount":""},{"aliVideoId":"","auth":"随着办公的现代化，我们所涉及到的办公设备越来越多，计算机、打印机、传真机等等。虽然它们给我们的工作带","cid":"0b01517963679661016372a6dc61003b","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/41563f03d2884caeae15544f1d6ed264/covers/107c48d3be1a42c0b3a82d2e42502f6f-00004.jpg","lable":"体系","learnerStatus":"","name":"办公设备使用--其他设备","playUrl":"","subject":"","time":"","viewCount":""},{"aliVideoId":"","auth":"随着办公的现代化，我们所涉及到的办公设备越来越多，计算机、打印机、传真机等等。虽然它们给我们的工作带","cid":"0b0151796367966101637299eecf003a","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/ef49ddae99cc427bb3b4782afa6e4d8f/covers/d2667b01d56a4523a7e6ee0fda4935c7-00005.jpg","lable":"体系","learnerStatus":"","name":"办公设备使用--计算机","playUrl":"","subject":"","time":"","viewCount":""},{"aliVideoId":"","auth":"企业中的泄密行为时有发生，一张照片、一个U盘、甚至不经意的一两句话，都可能会泄露企业秘密。要了解哪些","cid":"0b0151796367966101637292c1d50037","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/image/cover/7369048924484840B10B86629B5D65DA-6-2.png","lable":"体系","learnerStatus":"","name":"企业秘密","playUrl":"","subject":"","time":"","viewCount":""},{"aliVideoId":"","auth":"","cid":"0b015179636796610163728cf47b0036","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/783e0b1e23a145348976005ac1b6452d/covers/2a82f2c9cd2749868c1c7edf546937af-00005.jpg","lable":"体系","learnerStatus":"","name":"颈椎病康复操","playUrl":"","subject":"","time":"","viewCount":""},{"aliVideoId":"","auth":"","cid":"0b015179636796610163728afe1a0035","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/693d9d078f3042d5bd36edcbfe2a0f7b/covers/a3055e871fb64c41914dcdce91068eb1-00005.jpg","lable":"体系","learnerStatus":"","name":"自我按摩操（下）","playUrl":"","subject":"","time":"","viewCount":""},{"aliVideoId":"","auth":"","cid":"0b015179636796610163728763cc0034","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/7f70d22dd8ba492bbb564e825d5cfaa7/covers/d1bf3aab0deb48c894fb0a14478f3e23-00005.jpg","lable":"体系","learnerStatus":"","name":"自我按摩操（中）","playUrl":"","subject":"","time":"","viewCount":""},{"aliVideoId":"","auth":"","cid":"0b01517963679661016372859a280033","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/405139184daa47eebaacc80154b301ef/covers/2ab7187b05a349a1a4765567780beda7-00005.jpg","lable":"体系","learnerStatus":"","name":"自我按摩操（上）","playUrl":"","subject":"","time":"","viewCount":""},{"aliVideoId":"","auth":"","cid":"0b015179636796610163728423570032","commentCount":"","content":"V","duration":"","goodCount":"","img":"http://video.shinedu.com/0fc1394940714342b8d18078f9c9a2a6/covers/80621ee6abaf467987c0734b3e087228-00005.jpg","lable":"体系","learnerStatus":"","name":"办公室颈椎病的预防","playUrl":"","subject":"","time":"","viewCount":""}]
             }
         },
         methods: {
@@ -95,6 +108,11 @@
                 this.$dialog.toast({mes: `搜索：${value}`});
             }
         }
+    })
+</script>
+<script>
+    soshm('.datasetconfig', {
+        sites: ['weixin,', 'weibo', 'yixin', 'qzone']
     })
 </script>
 </body>
