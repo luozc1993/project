@@ -4,13 +4,12 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="6">
+          <list size="5">
             <item index="0" class="java.lang.String" itemvalue="lay-verify" />
             <item index="1" class="java.lang.String" itemvalue="lay-filter" />
             <item index="2" class="java.lang.String" itemvalue="lay-submit" />
-            <item index="3" class="java.lang.String" itemvalue="v-for" />
-            <item index="4" class="java.lang.String" itemvalue=":key" />
-            <item index="5" class="java.lang.String" itemvalue=":src" />
+            <item index="3" class="java.lang.String" itemvalue=":src" />
+            <item index="4" class="java.lang.String" itemvalue="v-for" />
           </list>
         </value>
       </option>
@@ -19,16 +18,25 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="9">
+          <list size="18">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
             <item index="3" class="java.lang.String" itemvalue="noscript" />
             <item index="4" class="java.lang.String" itemvalue="embed" />
             <item index="5" class="java.lang.String" itemvalue="script" />
-            <item index="6" class="java.lang.String" itemvalue="yd-flexbox" />
-            <item index="7" class="java.lang.String" itemvalue="yd-flexbox-item" />
-            <item index="8" class="java.lang.String" itemvalue="yd-cell-item" />
+            <item index="6" class="java.lang.String" itemvalue="yd-tabbar-item" />
+            <item index="7" class="java.lang.String" itemvalue="yd-tabbar" />
+            <item index="8" class="java.lang.String" itemvalue="yd-layout" />
+            <item index="9" class="java.lang.String" itemvalue="yd-search" />
+            <item index="10" class="java.lang.String" itemvalue="yd-navbar" />
+            <item index="11" class="java.lang.String" itemvalue="yd-input" />
+            <item index="12" class="java.lang.String" itemvalue="yd-list" />
+            <item index="13" class="java.lang.String" itemvalue="yd-list-item" />
+            <item index="14" class="java.lang.String" itemvalue="yd-list-other" />
+            <item index="15" class="java.lang.String" itemvalue="yd-cell-item" />
+            <item index="16" class="java.lang.String" itemvalue="yd-flexbox" />
+            <item index="17" class="java.lang.String" itemvalue="yd-flexbox-item" />
           </list>
         </value>
       </option>

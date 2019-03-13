@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="description" content="qq175023117的博客">
+    <title>qq175023117的博客</title>
+
+</head>
+
+<body>
+<div>
+    <button onclick="call()">通用分享</button>
+    <button onclick="call('wechatFriend')">微信好友</button>
+    <button onclick="call('wechatTimeline')">朋友圈</button>
+    <button onclick="call('qqFriend')">QQ</button>
+    <button onclick="call('qZone')">QQ空间</button>
+    <button onclick="call('weibo')">微博</button>
+</div>
+<script type="text/javascript" src="./nativeShare.js"></script>
+<script>
+    var nativeShare = new NativeShare()
+    var shareData = {
+        title: 'qq175023117的博客',
+        desc: 'qq175023117的博客',
+        // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
+        link: 'https://blog.csdn.net/qq175023117',
+        icon: 'https://avatar.csdn.net/5/2/E/1_qq175023117.jpg?1539049275',
+        // 不要过于依赖以下两个回调，很多浏览器是不支持的
+        success: function() {
+            alert('分享成功')
+        },
+        fail: function() {
+            alert('分享失败')
+        }
+    }
+    nativeShare.setShareData(shareData)
+
+    function call(command) {
+        try {
+            nativeShare.call(command)
+        } catch (err) {
+            // 如果不支持，你可以在这里做降级处理
+            alert(err.message)
+        }
+    }
+
+    function setTitle(title) {
+        nativeShare.setShareData({
+            title: title,
+        })
+    }
+
+
+
+
+</script>
+</body>
+
+</html>
