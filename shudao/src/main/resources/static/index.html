@@ -9,11 +9,8 @@
     <link rel="stylesheet" href="/assets/ydui/ydui.px.css">
     <link rel="stylesheet" href="/assets/ydui/ydui.base.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_1079162_x3qly866um.css">
-    <link rel="stylesheet" href="/assets/share/css/share.min.css">
     <!-- 引入rem自适应类库 -->
     <script src="/assets/ydui/ydui.flexible.js"></script>
-    <!--分享插件-->
-    <script src="/assets/share/js/social-share.min.js"></script>
 
     <style type="text/css">
         body{background-color: #f3f3f3}
@@ -40,8 +37,6 @@
                    <input type="search" placeholder="请输入要查询的课程名称">
                 </div>
             </div>
-            <div class="social-share"></div>
-            <div class="share-component" data-mobile-sites="weibo,qq,qzone,tencent"></div>
             <div class="weiKe-list">
                 <ul>
                     <li class="card" v-for="item, key in list"  :key="key">
@@ -60,7 +55,7 @@
                                 <span class="num">(12)</span>
                                 <span class="iconfont icon-xingxu"></span>
                                 <span class="num">(12)</span>
-                                <span class="iconfont icon-fenxiang1"></span>
+                                <span class="iconfont icon-fenxiang1" onclick="call()"></span>
                                 <span class="num">(12)</span>
                             </div>
                         </div>
@@ -94,6 +89,7 @@
 <!-- 引入组件库 -->
 <script src="/assets/ydui/ydui.px.js"></script>
 <script src="/assets/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/assets/nativeShare.js"></script>
 <script>
     new Vue({
         el: '#app',
@@ -109,11 +105,30 @@
             }
         }
     })
-</script>
-<script>
-    soshm('.datasetconfig', {
-        sites: ['weixin,', 'weibo', 'yixin', 'qzone']
-    })
+    var nativeShare = new NativeShare();
+    var shareData = {
+        title: '分享标题',
+        desc: '分享简介',
+        // 如果是微信该link的域名必须要在微信后台配置的安全域名之内的。
+        link: "http://www.luozc.cn:20001",
+        icon: 'https://avatar.csdn.net/5/2/E/1_qq175023117.jpg?1539049275',
+        // 不要过于依赖以下两个回调，很多浏览器是不支持的
+        success: function() {
+            alert('分享成功')
+        },
+        fail: function() {
+            alert('分享失败')
+        }
+    }
+    nativeShare.setShareData(shareData)
+    function call(command) {
+        try {
+            nativeShare.call(command)
+        } catch (err) {
+            // 如果不支持，你可以在这里做降级处理
+            alert(err.message)
+        }
+    }
 </script>
 </body>
 </html>
