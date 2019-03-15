@@ -37,8 +37,9 @@
                    <input type="search" placeholder="请输入要查询的课程名称">
                 </div>
             </div>
+            <yd-pullrefresh :callback="pullrefresh" ref="pullrefreshDemo">
             <yd-infinitescroll :callback="infinitescroll" ref="infinitescrollDemo">
-                <yd-pullrefresh :callback="pullrefresh" ref="pullrefreshDemo">
+
                 <div class="weiKe-list" slot="list">
                     <ul>
                         <li class="card" v-for="item, key in list"  :key="key">
@@ -48,13 +49,15 @@
                             <img  :src="item.img"  width="100%" >
                             <div class="count">
                                 <div class="countLeft">
-                                    <span class="num">10分钟前</span>
+                                    <span class="iconfont icon-eye" style="font-size: 14px"></span>
+                                    <span class="num">{{item.viewCount==""?0:item.viewCount}}</span>
+                                    <span class="num">{{item.time}}</span>
                                 </div>
                                 <div class="countRight" style="text-align: right">
                                     <span class="iconfont icon-dianzan-mian"></span>
-                                    <span class="num">(12)</span>
+                                    <span class="num">({{item.goodCount==""?0:item.goodCount}})</span>
                                     <span class="iconfont icon-xiaoxi"></span>
-                                    <span class="num">(12)</span>
+                                    <span class="num">({{item.commentCount==""?0:item.commentCount}})</span>
                                     <span class="iconfont icon-xingxu"></span>
                                     <span class="num">(12)</span>
                                     <span class="iconfont icon-fenxiang1" onclick="call()"></span>
@@ -69,9 +72,9 @@
 
                 <!-- 加载中提示，不指定，将显示默认加载中图标 -->
                 <img slot="loadingTip" src="http://static.ydcss.com/uploads/ydui/loading/loading10.svg"/>
-                </yd-pullrefresh>
-            </yd-infinitescroll>
 
+            </yd-infinitescroll>
+            </yd-pullrefresh>
             <yd-tabbar slot="tabbar" name="tabbar">
                 <yd-tabbar-item title="微课" link="#">
                     <img slot="icon" style="height: 25px;" src="http://static.ydcss.com/ydui/img/logo.png" alt="微课">
@@ -120,7 +123,8 @@
                this.getWeiKeList(this.page);
             },
             pullrefresh:function(){
-
+                this.list = [];
+                this.getWeiKeList(1);
             },
             getWeiKeList(page){
                 var _this = this;
@@ -135,13 +139,21 @@
                     success : function(data) {
                         if(data.status==0){
                             var l =data.list;
-                            console.log(l)
-
+                            if(l.length==0){
+                                /* 所有数据加载完毕 */
+                                this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.loadedDone');
+                                return;
+                            }
                             list = list.concat(l);//c=[1,2,3,4,5,6];
-                            console.log(list)
                             _this.list =  list;
                             _this.page =  page+1;
+
+
+
                         }
+                        /* 单次请求数据完毕 */
+                        _this.$refs.pullrefreshDemo.$emit('ydui.pullrefresh.finishLoad');
+                        _this.$refs.infinitescrollDemo.$emit('ydui.infinitescroll.finishLoad');
                     },
                     error : function() {
                         alert('fail');
