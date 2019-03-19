@@ -39,7 +39,8 @@
             </div>
             <yd-pullrefresh :callback="pullrefresh" ref="pullrefreshDemo">
             <yd-infinitescroll :callback="infinitescroll" ref="infinitescrollDemo">
-
+                <!-- 侧边栏 -->
+                <% include("./page/share.html"){} %>
                 <div class="weiKe-list" slot="list">
                     <ul>
                         <li class="card" v-for="item, key in list"  :key="key">

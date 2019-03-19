@@ -1,4 +1,4 @@
-package cn.luozc.web.system.controller;
+package cn.luozc.web.business.controller;
 
 import cn.luozc.web.common.JsonResult;
 import cn.luozc.web.common.PageResult;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping("/system/flow")
+@RequestMapping("/business/flow")
 public class FlowController {
 
     @Autowired
@@ -30,9 +30,11 @@ public class FlowController {
 
 
     @RequestMapping("/page")
-    public String page(String m, HttpServletRequest request){
-
-        return "";
+    public String page(String m,int flowId,int steoId, Model model){
+        List<SysForm> list = formService.list(flowId, steoId);
+        String s = JSONArray.toJSONString(list);
+        model.addAttribute("forms", s);
+        return "business/flow/"+m+".html";
     }
 
 
