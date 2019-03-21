@@ -6,13 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="etu_web" />
         <module name="oa" />
-        <module name="shudao" />
         <module name="utils" />
         <module name="web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="etu_web" target="1.8" />
       <module name="oa" target="1.8" />
       <module name="project" target="1.8" />
       <module name="shudao" target="1.8" />
