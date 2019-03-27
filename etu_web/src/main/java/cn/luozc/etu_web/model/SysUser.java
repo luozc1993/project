@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity //声明一个实体，用的是Java规范下的注解
 @Table(name = "sys_user") //映射的表名称
@@ -26,6 +27,9 @@ public class SysUser {
 
     @Column
     private String phone;
+
+    @Column
+    private Date createTime;
 
 
     public String getId() {
@@ -74,6 +78,15 @@ public class SysUser {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override

@@ -1,8 +1,7 @@
 package cn.luozc.etu_web.controller;
 
-import cn.luozc.etu_web.model.SysUser;
 import cn.luozc.etu_web.service.SysUserService;
-import cn.luozc.etu_web.util.JsonData;
+import cn.luozc.utils.JsonData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
