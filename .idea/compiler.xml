@@ -23,11 +23,12 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="oa" options="" />
+      <module name="etu_web" options="-parameters" />
+      <module name="oa" options="-parameters" />
       <module name="project" options="" />
       <module name="shudao" options="" />
-      <module name="utils" options="" />
-      <module name="web" options="" />
+      <module name="utils" options="-parameters" />
+      <module name="web" options="-parameters" />
     </option>
   </component>
 </project>
